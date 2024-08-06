@@ -1,0 +1,11 @@
+{
+  "name": "admiral-bot",
+  "version": "0.0.0",
+  "description": "A discord bot to fetch the Admiral's articles.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Keilo75",
+  "license": "MIT"
+}
