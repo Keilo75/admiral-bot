@@ -22,7 +22,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
   const { commandName } = interaction;
   const command = commands.get(commandName);
   if (!command) {
-    // TODO: Display error to user
     Logger.error(`Unable to find '${commandName}' command.`);
     await interaction.reply(i18next.t("system.error"));
     return;
