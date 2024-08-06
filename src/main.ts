@@ -1,3 +1,5 @@
-import fs from "fs";
+import dotenv from "dotenv";
 
-console.log(fs.readFileSync("./src/main.ts", "utf-8"));
+dotenv.config();
+
+console.log(process.env.DISCORD_TOKEN);
