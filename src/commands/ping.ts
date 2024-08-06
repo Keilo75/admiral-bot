@@ -6,7 +6,7 @@ import { Command } from "../models";
 export const ping: Command = {
   data: new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Shows the bot's current ping."),
+    .setDescription(i18next.t("descriptions.ping")),
   execute: async (interaction) => {
     const sent = await interaction.reply({
       content: i18next.t("system.pinging"),

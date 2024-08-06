@@ -1,3 +1,5 @@
+import "../libs/i18n";
+
 import { REST, Routes } from "discord.js";
 import dotenv from "dotenv";
 
