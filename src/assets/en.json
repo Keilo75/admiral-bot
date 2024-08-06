@@ -1,5 +1,7 @@
 {
   "system": {
-    "error": ":x: | An unexpected error occured. Please check the logs for details."
+    "error": ":x: **|** An unexpected error occured. Please check the logs for details.",
+    "pinging": ":timer: **|** Pinging...",
+    "pinged": ":timer: **|** Current roundtrip latency is {{latency}}ms."
   }
 }
