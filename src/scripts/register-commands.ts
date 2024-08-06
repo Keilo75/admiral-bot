@@ -9,7 +9,7 @@ dotenv.config();
 const mode = process.env.MODE === "dev" ? "dev" : "prod";
 Logger.info(`Registering commands in ${mode} mode.`);
 
-const commandData = Object.values(commands).map((c) => c.data.toJSON());
+const commandData = Array.from(commands.values()).map((c) => c.data.toJSON());
 Logger.trace("Commands", commandData);
 
 postRequest();

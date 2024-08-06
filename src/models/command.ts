@@ -1,6 +1,9 @@
-import { type SlashCommandBuilder } from "discord.js";
+import type {
+  ChatInputCommandInteraction,
+  SlashCommandBuilder,
+} from "discord.js";
 
 export type Command = {
   data: SlashCommandBuilder;
-  execute: () => Promise<void>;
+  execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 };

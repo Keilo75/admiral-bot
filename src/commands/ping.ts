@@ -6,5 +6,7 @@ export const ping: Command = {
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Shows the bot's current ping."),
-  execute: async () => {},
+  execute: async (interaction) => {
+    await interaction.reply("Hey!");
+  },
 };
