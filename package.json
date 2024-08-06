@@ -4,7 +4,8 @@
   "description": "A discord bot to fetch the Admiral's articles.",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/main.ts"
+    "start": "ts-node src/main.ts",
+    "dev": "nodemon src/main.ts"
   },
   "author": "Keilo75",
   "license": "MIT",
@@ -12,6 +13,7 @@
     "@eslint/js": "^9.8.0",
     "eslint": "^9.8.0",
     "globals": "^15.9.0",
+    "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.1"
