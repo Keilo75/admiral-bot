@@ -10,9 +10,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node16",
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "~src/*": ["src/*"]
-    },
-  }
+  },
+  "ts-node": {  "files": true }
 }

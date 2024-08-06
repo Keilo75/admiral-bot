@@ -1,15 +1,25 @@
 import chalk from "chalk";
 
-type LogLevel = "info";
+type LogLevel = "info" | "error" | "trace";
 
 export class Logger {
   constructor() {}
 
-  public info(message: unknown) {
+  public static info(message: unknown) {
     console.log(this.getLogPrefix("info") + message);
   }
 
-  private getLogPrefix(level: LogLevel): string {
+  public static error(message: unknown, error?: unknown) {
+    console.error(this.getLogPrefix("error") + message);
+    if (error) console.error(error);
+  }
+
+  public static trace(message: unknown, trace: unknown) {
+    console.log(this.getLogPrefix("trace") + message);
+    console.log(JSON.stringify(trace));
+  }
+
+  private static getLogPrefix(level: LogLevel): string {
     const time = new Date();
 
     return `${chalk.gray(`[${time.toISOString()}]`)} ${this.getLogLevel(
@@ -17,10 +27,16 @@ export class Logger {
     )} `;
   }
 
-  private getLogLevel(level: LogLevel): string {
+  private static getLogLevel(level: LogLevel): string {
     switch (level) {
       case "info":
         return chalk.blue("[INFO]");
+
+      case "error":
+        return chalk.red("[ERROR]");
+
+      case "trace":
+        return chalk.magenta("[TRACE]");
     }
   }
 }

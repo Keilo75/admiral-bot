@@ -6,13 +6,17 @@
   "scripts": {
     "start": "ts-node src/main.ts",
     "dev": "nodemon src/main.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "register-commands:dev": "cross-env MODE=dev ts-node src/scripts/register-commands.ts",
+    "register-commands:prod": "cross-env MODE=prod ts-node src/scripts/register-commands.ts"
   },
   "author": "Keilo75",
   "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.8.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.9.0",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
