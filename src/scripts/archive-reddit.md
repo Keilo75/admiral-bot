@@ -76,7 +76,7 @@
 
 47 - Revisited) [20/5/23: Emery Worldwide flight 17 (2000)](https://www.reddit.com/r/CatastrophicFailure/comments/13n1q60/2000_the_crash_of_emery_worldwide_airlines_flight/) || [Medium](https://admiralcloudberg.medium.com/for-want-of-a-nail-the-crash-of-emery-worldwide-airlines-flight-17-83cdf5d835c8)
 
-244. [6/5/23:\* Air Canada flight 621 (1970)](https://www.reddit.com/r/CatastrophicFailure/comments/13aylm5/1970_the_crash_of_air_canada_flight_621_a_dc8/) || [Medium](https://admiralcloudberg.medium.com/touch-and-go-tragedy-the-crash-of-air-canada-flight-621-ecd4c5ab831)
+244. [6/5/23: Air Canada flight 621 (1970)](https://www.reddit.com/r/CatastrophicFailure/comments/13aylm5/1970_the_crash_of_air_canada_flight_621_a_dc8/) || [Medium](https://admiralcloudberg.medium.com/touch-and-go-tragedy-the-crash-of-air-canada-flight-621-ecd4c5ab831)
 
 46 - Revisited) [29/4/23: Germanwings flight 9525 (2015)](https://www.reddit.com/r/CatastrophicFailure/comments/1331i7z/2015_the_crash_of_germanwings_flight_9525_a_pilot/) || [Medium](https://admiralcloudberg.medium.com/the-madness-in-our-methods-the-crash-of-germanwings-flight-9525-and-our-broken-aeromedical-system-5b95abd4fe6d)
 
@@ -94,7 +94,7 @@
 
 240. [11/3/23: Airlines PNG flight 1600 (2011)](https://www.reddit.com/r/CatastrophicFailure/comments/11oqc6h/2011_the_crash_of_airlines_png_flight_1600_a_de/) || [Medium](https://admiralcloudberg.medium.com/breakdown-in-the-bush-the-crash-of-airlines-png-flight-1600-861e29c145b1)
 
-42 - Revisited) [4/3/23:\* Gol Transportes Aéreos flight 1907 (2006)](https://www.reddit.com/r/CatastrophicFailure/comments/11j1du1/2006_the_crash_of_gol_transportes_a%C3%A9reos_flight/) || [Medium](https://admiralcloudberg.medium.com/the-fickle-hand-of-fate-the-amazon-mid-air-collision-and-the-crash-of-gol-transportes-a%C3%A9reos-ab407547b1b2)
+42 - Revisited) [4/3/23: Gol Transportes Aéreos flight 1907 (2006)](https://www.reddit.com/r/CatastrophicFailure/comments/11j1du1/2006_the_crash_of_gol_transportes_a%C3%A9reos_flight/) || [Medium](https://admiralcloudberg.medium.com/the-fickle-hand-of-fate-the-amazon-mid-air-collision-and-the-crash-of-gol-transportes-a%C3%A9reos-ab407547b1b2)
 
 239. [18/2/23: Gulf Air flight 072 (2000)](https://www.reddit.com/r/CatastrophicFailure/comments/115lzz0/2000_the_crash_of_gulf_air_flight_072_an_airbus/) || [Medium](https://admiralcloudberg.medium.com/the-subtlety-of-instinct-the-crash-of-gulf-air-flight-072-79d823ded726)
 
@@ -172,7 +172,7 @@
 
 24 - Revisited) [21/5/22: Air Florida flight 90 (1982)](https://www.reddit.com/r/CatastrophicFailure/comments/uuplqk/1982_the_crash_of_air_florida_flight_90_analysis/) || [Medium](https://admiralcloudberg.medium.com/the-cold-laws-of-winter-the-crash-of-air-florida-flight-90-cdcba7847e0a)
 
-23 - Revisited) [14/5/22\*: Polish Air Force flight 101 (2010)](https://www.reddit.com/r/CatastrophicFailure/comments/uq3h81/2010_the_crash_of_polish_air_force_flight_101_the/) || [Medium](https://admiralcloudberg.medium.com/all-the-presidents-men-the-story-of-the-smolensk-air-disaster-and-the-death-of-lech-kaczy%C5%84ski-590a3977f)
+23 - Revisited) [14/5/22: Polish Air Force flight 101 (2010)](https://www.reddit.com/r/CatastrophicFailure/comments/uq3h81/2010_the_crash_of_polish_air_force_flight_101_the/) || [Medium](https://admiralcloudberg.medium.com/all-the-presidents-men-the-story-of-the-smolensk-air-disaster-and-the-death-of-lech-kaczy%C5%84ski-590a3977f)
 
 220. [30/4/22: Dan-Air flight 240 (1981)](https://www.reddit.com/r/CatastrophicFailure/comments/ufdj1i/1981_the_crash_of_danair_flight_240_analysis/) || [Medium](https://admiralcloudberg.medium.com/doors-better-left-closed-the-crash-of-dan-air-flight-240-dd917af42d74)
 
@@ -354,13 +354,13 @@
 
 241. [8/8/20: Inex-Adria Aviapromet flight 1308 (1981)](https://www.reddit.com/r/CatastrophicFailure/comments/i61v0e/1981_the_crash_of_inexadria_aviapromet_flight/) || [Medium](https://medium.com/@admiralcloudberg/cleared-for-catastrophe-the-crash-of-inex-adria-aviapromet-flight-1308-217804776db0)
 
-242. [1/8/20\*: Northwest Airlink flight 5719 (1993)](https://www.reddit.com/r/CatastrophicFailure/comments/i2zy1h/1993_the_crash_of_northwest_airlink_flight_5719/) || [Medium](https://medium.com/@admiralcloudberg/the-fifth-circle-the-crash-of-northwest-airlink-flight-5719-41e9324db931)
+242. [1/8/20: Northwest Airlink flight 5719 (1993)](https://www.reddit.com/r/CatastrophicFailure/comments/i2zy1h/1993_the_crash_of_northwest_airlink_flight_5719/) || [Medium](https://medium.com/@admiralcloudberg/the-fifth-circle-the-crash-of-northwest-airlink-flight-5719-41e9324db931)
 
 243. [25/7/20: West Air Sweden flight 294 (2016)](https://www.reddit.com/r/CatastrophicFailure/comments/hxpj9a/2016_the_crash_of_west_air_sweden_flight_294/) || [Medium](https://medium.com/@admiralcloudberg/paradox-of-the-improbable-the-crash-of-west-air-sweden-flight-294-19ba92226c5e)
 
 244. [18/7/20: Indian Airlines flight 605 (1990)](https://www.reddit.com/r/CatastrophicFailure/comments/htispe/1990_the_crash_of_indian_airlines_flight_605/) || [Medium](https://medium.com/@admiralcloudberg/thinking-like-a-computer-the-crash-of-indian-airlines-flight-605-770758d374b9)
 
-245. [11/7/20\*: Trigana Air flight 267 (2015)](https://www.reddit.com/r/CatastrophicFailure/comments/hoqkjt/2015_the_crash_of_trigana_air_flight_267_analysis/) || [Medium](https://medium.com/@admiralcloudberg/habits-die-hard-the-crash-of-trigana-air-flight-267-919fae6b56c3)
+245. [11/7/20: Trigana Air flight 267 (2015)](https://www.reddit.com/r/CatastrophicFailure/comments/hoqkjt/2015_the_crash_of_trigana_air_flight_267_analysis/) || [Medium](https://medium.com/@admiralcloudberg/habits-die-hard-the-crash-of-trigana-air-flight-267-919fae6b56c3)
 
 246. [4/7/20: The Wichita State University football team crash (1970)](https://www.reddit.com/r/CatastrophicFailure/comments/hl5kt4/1970_the_wichita_state_university_football_team/) || [Medium](https://medium.com/@admiralcloudberg/the-valley-of-no-return-the-story-of-the-wichita-state-university-football-team-plane-crash-50064147c664)
 
@@ -508,17 +508,17 @@
 
 318. [16/2/19: Malaysia Airlines flight 17 (2014)](https://www.reddit.com/r/CatastrophicFailure/comments/ardgdd/the_crash_of_malaysia_airlines_flight_17_analysis/)
 
-319. [9/2/19\*: Atlantic Southeast flight 529 (1995)](https://www.reddit.com/r/CatastrophicFailure/comments/ap8538/the_crash_of_atlantic_southeast_airlines_flight/)
+319. [9/2/19: Atlantic Southeast flight 529 (1995)](https://www.reddit.com/r/CatastrophicFailure/comments/ap8538/the_crash_of_atlantic_southeast_airlines_flight/)
 
 320. [2/2/19: TAROM flight 371 (1995)](https://www.reddit.com/r/CatastrophicFailure/comments/amhreo/the_crash_of_tarom_flight_371_analysis/)
 
-321. [26/1/19\*: Mexico City Learjet crash (2008)](https://www.reddit.com/r/CatastrophicFailure/comments/akr3s1/the_crash_of_mexicos_interior_ministry_jet/)
+321. [26/1/19: Mexico City Learjet crash (2008)](https://www.reddit.com/r/CatastrophicFailure/comments/akr3s1/the_crash_of_mexicos_interior_ministry_jet/)
 
 322. [19/1/19: Uruguayan Air Force flight 571 (1972)](https://www.reddit.com/r/CatastrophicFailure/comments/ahq6im/the_crash_of_uruguayan_air_force_flight_571_the/)
 
 323. [12/1/19: Birgenair flight 301 (1996)](https://www.reddit.com/r/CatastrophicFailure/comments/afap8b/the_crash_of_birgenair_flight_301_analysis/)
 
-324. [5/1/19\*: The Boeing 737 Rudder Defect (1991-1996)](https://www.reddit.com/r/CatastrophicFailure/comments/adl0jk/the_crashes_of_united_airlines_flight_585_and/)
+324. [5/1/19: The Boeing 737 Rudder Defect (1991-1996)](https://www.reddit.com/r/CatastrophicFailure/comments/adl0jk/the_crashes_of_united_airlines_flight_585_and/)
 
 325. [29/12/18: American Eagle flight 4184 (1994)](https://www.reddit.com/r/CatastrophicFailure/comments/aanluo/the_crash_of_american_eagle_flight_4184_analysis/)
 

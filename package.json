@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "scripts:register-commands:dev": "cross-env MODE=dev ts-node src/scripts/register-commands.ts",
     "scripts:register-commands:prod": "cross-env MODE=prod ts-node src/scripts/register-commands.ts",
-    "scripts:parse-archive": "ts-node src/scripts/parse-archive.ts"
+    "scripts:parse-archives": "ts-node src/scripts/parse-archives.ts"
   },
   "author": "Keilo75",
   "license": "MIT",

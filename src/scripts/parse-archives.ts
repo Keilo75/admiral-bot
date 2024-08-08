@@ -10,6 +10,13 @@ type Article = {
   locations: string[];
 };
 
+type ArticleInfo = {
+  title: string;
+  releaseDate: string;
+  reddit: string;
+  medium?: string;
+};
+
 function parseDocsArchive() {
   const articles: Article[] = [];
 
@@ -70,4 +77,48 @@ function parseDocsArchive() {
   );
 }
 
+function parseRedditArchive() {
+  const articles: ArticleInfo[] = [];
+
+  const lines = fs
+    .readFileSync(path.join(__dirname, "archive-reddit.md"), "utf-8")
+    .split("\n");
+
+  const regex = /(?=\[(!\[.+?\]\(.+?\)|.+?)]\((https:\/\/[^)]+)\))/gi;
+  for (const line of lines) {
+    if (line.length < 10) continue;
+
+    const links = [...line.matchAll(regex)].map((m) => ({
+      text: m[1],
+      link: m[2],
+    }));
+
+    const [date, title] = links[0].text.split(": ");
+    const reddit = links[0].link;
+    const medium = links[1]?.link;
+
+    const [day, month, year] = date.split("/").map((n) => parseInt(n));
+    const releaseDate = new Date(year + 2000, month - 1, day)
+      .toISOString()
+      .slice(0, 10);
+
+    articles.push({ title, releaseDate, reddit, medium });
+  }
+
+  const processedLines = articles
+    .flatMap(({ title, releaseDate, reddit, medium }) => {
+      const info = [releaseDate, reddit];
+      if (medium) info.push(medium);
+
+      return [[title], info];
+    })
+    .join("\n");
+
+  fs.writeFileSync(
+    path.join(__dirname, "archive-reddit-processed.md"),
+    processedLines
+  );
+}
+
 parseDocsArchive();
+parseRedditArchive();
