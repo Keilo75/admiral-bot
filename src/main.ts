@@ -6,11 +6,13 @@ import i18next from "i18next";
 
 import { commands } from "./commands";
 import { fetchArticles } from "./libs/data";
+import { Context } from "./models/context";
 import { Logger } from "./utils";
 
 dotenv.config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const context = new Context();
 
 client.once(Events.ClientReady, (readyClient) => {
   Logger.log(`Logged in as ${readyClient.user.tag}.`);
@@ -28,7 +30,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 
   try {
-    await command.execute(interaction);
+    await command.execute({ interaction, context });
   } catch (err) {
     Logger.error(`Error while executing ${commandName}.`, err);
 
@@ -43,7 +45,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 fetchArticles()
-  .then(() => {
+  .then((articles) => {
+    context.populateArticles(articles);
     client.login(process.env.DISCORD_TOKEN);
   })
   .catch((err) => {

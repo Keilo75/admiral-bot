@@ -7,7 +7,7 @@ export const ping: Command = {
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription(i18next.t("descriptions.ping")),
-  execute: async (interaction) => {
+  execute: async ({ interaction }) => {
     const sent = await interaction.reply({
       content: i18next.t("system.pinging"),
       fetchReply: true,
