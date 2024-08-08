@@ -1,9 +1,9 @@
-import { Command } from "../models";
+import { type Command } from "../models/command";
 import { ping } from "./ping";
 
 export const commands = new Map<string, Command>();
-addCommandsToMap(ping);
-
-function addCommandsToMap(...commandsToAdd: Command[]) {
+const addCommandsToMap = (...commandsToAdd: Command[]) => {
   commandsToAdd.forEach((c) => commands.set(c.data.name, c));
-}
+};
+
+addCommandsToMap(ping);

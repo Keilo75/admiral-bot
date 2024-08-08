@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 import i18next from "i18next";
 
-import { Command } from "../models";
+import { type Command } from "../models/command";
 
 export const ping: Command = {
   data: new SlashCommandBuilder()

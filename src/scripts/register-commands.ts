@@ -14,9 +14,7 @@ Logger.info(`Registering commands in ${mode} mode.`);
 const commandData = Array.from(commands.values()).map((c) => c.data.toJSON());
 Logger.trace("Commands", commandData);
 
-postRequest();
-
-async function postRequest() {
+const postRequest = async () => {
   const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 
   const route =
@@ -35,4 +33,6 @@ async function postRequest() {
   } catch (err) {
     Logger.error("Unable to update application commands.", err);
   }
-}
+};
+
+postRequest();
