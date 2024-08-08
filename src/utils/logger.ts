@@ -16,7 +16,7 @@ export class Logger {
 
   public static trace(message: unknown, trace: unknown) {
     console.log(this.getLogPrefix("trace") + message);
-    console.log(JSON.stringify(trace));
+    console.log(trace);
   }
 
   private static getLogPrefix(level: LogLevel): string {

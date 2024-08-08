@@ -5,13 +5,13 @@ import dotenv from "dotenv";
 import i18next from "i18next";
 
 import { commands } from "./commands";
+import { fetchArticles } from "./libs/data";
 import { Logger } from "./utils";
 
 dotenv.config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-Logger.info("Logging in...");
 client.once(Events.ClientReady, (readyClient) => {
   Logger.info(`Logged in as ${readyClient.user.tag}.`);
 });
@@ -42,4 +42,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
-client.login(process.env.DISCORD_TOKEN);
+fetchArticles()
+  .then(() => {
+    client.login(process.env.DISCORD_TOKEN);
+  })
+  .catch((err) => {
+    Logger.error("Unable to fetch articles.", err);
+    process.exit(1);
+  });
