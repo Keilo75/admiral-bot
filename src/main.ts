@@ -13,7 +13,7 @@ dotenv.config();
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once(Events.ClientReady, (readyClient) => {
-  Logger.info(`Logged in as ${readyClient.user.tag}.`);
+  Logger.log(`Logged in as ${readyClient.user.tag}.`);
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {

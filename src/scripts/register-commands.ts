@@ -9,10 +9,10 @@ import { Logger } from "../utils";
 dotenv.config();
 
 const mode = process.env.MODE === "dev" ? "dev" : "prod";
-Logger.info(`Registering commands in ${mode} mode.`);
+Logger.log(`Registering commands in ${mode} mode.`);
 
 const commandData = Array.from(commands.values()).map((c) => c.data.toJSON());
-Logger.trace("Commands", commandData);
+Logger.debug("Commands", commandData);
 
 const postRequest = async () => {
   const rest = new REST().setToken(process.env.DISCORD_TOKEN);
@@ -26,10 +26,10 @@ const postRequest = async () => {
       : Routes.applicationCommands(process.env.CLIENT_ID);
 
   try {
-    Logger.info(`Registering ${commandData.length} commands.`);
+    Logger.log(`Registering ${commandData.length} commands.`);
     const data = await rest.put(route, { body: commandData });
-    Logger.trace("API Response", data);
-    Logger.info(`Successfully registered commands.`);
+    Logger.debug("API Response", data);
+    Logger.log(`Successfully registered commands.`);
   } catch (err) {
     Logger.error("Unable to update application commands.", err);
   }

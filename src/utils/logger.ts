@@ -1,12 +1,12 @@
 import chalk from "chalk";
 
-type LogLevel = "info" | "error" | "trace";
+type LogLevel = "log" | "error" | "debug";
 
 export class Logger {
   constructor() {}
 
-  public static info(message: unknown) {
-    console.log(this.getLogPrefix("info") + message);
+  public static log(message: unknown) {
+    console.log(this.getLogPrefix("log") + message);
   }
 
   public static error(message: unknown, error?: unknown) {
@@ -14,9 +14,9 @@ export class Logger {
     if (error) console.error(error);
   }
 
-  public static trace(message: unknown, trace: unknown) {
-    console.log(this.getLogPrefix("trace") + message);
-    console.log(trace);
+  public static debug(message: unknown, trace: unknown) {
+    console.debug(this.getLogPrefix("debug") + message);
+    console.debug(trace);
   }
 
   private static getLogPrefix(level: LogLevel): string {
@@ -29,14 +29,14 @@ export class Logger {
 
   private static getLogLevel(level: LogLevel): string {
     switch (level) {
-      case "info":
-        return chalk.blue("[INFO]");
+      case "log":
+        return chalk.blue("[LOG]");
 
       case "error":
         return chalk.red("[ERROR]");
 
-      case "trace":
-        return chalk.magenta("[TRACE]");
+      case "debug":
+        return chalk.magenta("[DEBUG]");
     }
   }
 }

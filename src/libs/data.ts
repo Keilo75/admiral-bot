@@ -4,13 +4,13 @@ import { Article } from "../models/article";
 import { Logger } from "../utils";
 
 export const fetchArticles = async (): Promise<Article[]> => {
-  Logger.info("Fetching articels.");
+  Logger.log("Fetching articels.");
 
   const response = await fetch(process.env.ARTICLES_DOWNLOAD_URL);
-  Logger.trace("API Response", response);
+  Logger.debug("API Response", response);
 
   const text = await response.text();
-  Logger.trace("Extracted Text", text);
+  Logger.debug("Extracted Text", text);
 
   const articles: Article[] = [];
 
@@ -19,8 +19,8 @@ export const fetchArticles = async (): Promise<Article[]> => {
       .on("data", (row) => articles.push(convertRawArticle(row)))
       .on("error", (err) => reject(err))
       .on("end", () => {
-        Logger.info(`Loaded ${articles.length} articles.`);
-        Logger.trace("Articles", JSON.stringify(articles));
+        Logger.log(`Loaded ${articles.length} articles.`);
+        Logger.debug("Articles", JSON.stringify(articles));
         resolve(articles);
       });
   });
