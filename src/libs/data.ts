@@ -1,7 +1,10 @@
 import { parseString } from "@fast-csv/parse";
+import { randomUUID } from "crypto";
 
 import { Article } from "../models/article";
 import { Logger } from "../utils";
+
+// TODO: Cache data to avoid fetching in dev mode.
 
 export const fetchArticles = async (): Promise<Article[]> => {
   Logger.log("Fetching articels.");
@@ -53,6 +56,7 @@ const convertRawArticle = (raw: RawArticle): Article => {
 
   const releaseDate = new Date(raw["Release Date"]);
   return {
+    id: randomUUID(),
     title,
     releaseDate,
     accident: {

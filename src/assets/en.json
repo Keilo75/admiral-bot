@@ -5,6 +5,7 @@
     "pinged": ":timer: **|** Current roundtrip latency is {{latency}}ms."
   },
   "descriptions": {
-    "ping": "Shows the bot's current ping."
+    "ping": "Shows the bot's current ping.",
+    "random-article": "Retrieve a random article."
   }
 }
