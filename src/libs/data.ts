@@ -1,6 +1,7 @@
 import { parseString } from "@fast-csv/parse";
 import { randomUUID } from "crypto";
 
+import config from "../../config.json";
 import { Article } from "../models/article";
 import { Logger } from "../utils";
 
@@ -9,7 +10,7 @@ import { Logger } from "../utils";
 export const fetchArticles = async (): Promise<Article[]> => {
   Logger.log("Fetching articels.");
 
-  const response = await fetch(process.env.ARTICLES_DOWNLOAD_URL);
+  const response = await fetch(config.articlesDownloadURL);
   Logger.debug("API Response", response);
 
   const text = await response.text();
