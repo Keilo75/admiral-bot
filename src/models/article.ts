@@ -49,7 +49,7 @@ export const buildArticleEmbed = (article: Article): EmbedBuilder => {
       },
       {
         name: t("article.release-date"),
-        value: t("format.date", { date: article.releaseDate }),
+        value: t("format.dates", { dates: [article.releaseDate] }),
         inline: true,
       }
     );

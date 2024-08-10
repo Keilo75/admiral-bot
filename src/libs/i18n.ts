@@ -12,15 +12,14 @@ i18next.init({
   interpolation: { escapeValue: false },
 });
 
-i18next.services.formatter?.add("date", (values: Date | Date[]) => {
-  const formatDate = (date: Date) => date.toISOString().slice(0, 10);
+i18next.services.formatter?.add("dates", (values: Date[]) => {
+  const formatDate = (date: Date) => {
+    return date.toISOString().slice(0, 10);
+  };
 
-  if (Array.isArray(values))
-    return t("format.list-short", {
-      values: values.map((d) => formatDate(d)),
-    });
-
-  return formatDate(values);
+  return t("format.list-short", {
+    values: values.map((d) => formatDate(d)),
+  });
 });
 
 i18next.services.formatter?.add("list-short", (values: string[]) => {
