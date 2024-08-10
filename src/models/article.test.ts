@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { type Article, buildArticleEmbed, EMPTY_FIELD } from "./article";
+import { type Article, buildArticleEmbed } from "./article";
 
 const ARTICLE: Article = {
   id: "",
@@ -23,19 +23,16 @@ describe("build article embed", () => {
     expect(data.description).toEqual("Flight 1");
 
     expect(data.fields).toEqual([
-      { name: "Accident Type", value: "Accident", inline: true },
-      { name: "Accident Date", value: "1970-01-01", inline: true },
-      EMPTY_FIELD,
-      { name: "Aircraft", value: "Aircraft 1", inline: true },
-      { name: "Location", value: "Earth", inline: true },
-      EMPTY_FIELD,
+      { name: "Accident Type", value: "Accident" },
+      { name: "Accident Date", value: "1970-01-01" },
+      { name: "Aircraft", value: "Aircraft 1" },
+      { name: "Location", value: "Earth" },
       {
         name: "Links",
         value: "[Reddit](reddit.com)\n[Medium](medium.com)",
         inline: true,
       },
       { name: "Release Date", value: "2000-01-01", inline: true },
-      EMPTY_FIELD,
     ]);
   });
 
@@ -54,23 +51,19 @@ describe("build article embed", () => {
     expect(data.description).toEqual("Flight 1 and Flight 2");
 
     expect(data.fields).toEqual([
-      { name: "Accident Type", value: "Accident", inline: true },
+      { name: "Accident Type", value: "Accident" },
       {
         name: "Accident Dates",
         value: "1970-01-01 / 1970-01-02",
-        inline: true,
       },
-      EMPTY_FIELD,
-      { name: "Aircraft", value: "Aircraft 1 / Aircraft 2", inline: true },
-      { name: "Locations", value: "Country 1 / Country 2", inline: true },
-      EMPTY_FIELD,
+      { name: "Aircraft", value: "Aircraft 1 / Aircraft 2" },
+      { name: "Locations", value: "Country 1 / Country 2" },
       {
         name: "Links",
         value: "[Reddit](reddit.com)\n[Medium](medium.com)",
         inline: true,
       },
       { name: "Release Date", value: "2000-01-01", inline: true },
-      EMPTY_FIELD,
     ]);
   });
 
@@ -89,19 +82,16 @@ describe("build article embed", () => {
     expect(data.description).toEqual("Flight 1 and Flight 2");
 
     expect(data.fields).toEqual([
-      { name: "Accident Type", value: "Accident", inline: true },
-      { name: "Accident Date", value: "1970-01-01", inline: true },
-      EMPTY_FIELD,
-      { name: "Aircraft", value: "Aircraft 1", inline: true },
-      { name: "Location", value: "Earth", inline: true },
-      EMPTY_FIELD,
+      { name: "Accident Type", value: "Accident" },
+      { name: "Accident Date", value: "1970-01-01" },
+      { name: "Aircraft", value: "Aircraft 1" },
+      { name: "Location", value: "Earth" },
       {
         name: "Links",
         value: "[Reddit](reddit.com)\n[Medium](medium.com)",
         inline: true,
       },
       { name: "Release Date", value: "2000-01-01", inline: true },
-      EMPTY_FIELD,
     ]);
   });
 
