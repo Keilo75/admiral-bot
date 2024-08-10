@@ -1,6 +1,7 @@
 import type {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
 } from "discord.js";
 
 import { type Context } from "./context";
@@ -11,6 +12,6 @@ type ExecuteArgs = {
 };
 
 export type Command = {
-  data: SlashCommandBuilder;
+  data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
   execute: (args: ExecuteArgs) => Promise<void>;
 };

@@ -9,10 +9,10 @@ export const ping: Command = {
     .setDescription(t("commands.ping")),
   execute: async ({ interaction }) => {
     const sent = await interaction.reply({
-      content: t("system.pinging"),
+      content: t("messages.pinging"),
       fetchReply: true,
     });
     const latency = sent.createdTimestamp - interaction.createdTimestamp;
-    await interaction.editReply(t("system.pinged", { latency }));
+    await interaction.editReply(t("messages.pinged", { latency }));
   },
 };

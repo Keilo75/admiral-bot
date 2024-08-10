@@ -1,14 +1,17 @@
 {
-  "system": {
+  "messages": {
     "error": ":x: **|** An unexpected error occured. Please check the logs for details.",
     "pinging": ":timer: **|** Pinging...",
     "pinged": ":timer: **|** Current roundtrip latency is {{latency}}ms."
   },
   "commands": {
     "ping": "Shows the bot's current ping.",
-    "random-article": "Retrieve a random article."
+    "random-article": "Retrieve a random article.",
+    "article": "Display information about a single article.",
+    "query": "Title or flight number(s)/registration(s) to find article by"
   },
   "article": {
+    "title": "Article Title",
     "accident-type": "Accident Type",
     "accident-date_one": "Accident Date",
     "accident-date_other": "Accident Dates",

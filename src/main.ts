@@ -25,7 +25,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   const command = commands.get(commandName);
   if (!command) {
     Logger.error(`Unable to find '${commandName}' command.`);
-    await interaction.reply(t("system.error"));
+    await interaction.reply(t("messages.error"));
     return;
   }
 
@@ -34,7 +34,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   } catch (err) {
     Logger.error(`Error while executing ${commandName}.`, err);
 
-    const content = t("system.error");
+    const content = t("messages.error");
 
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({ content });
