@@ -1,13 +1,21 @@
 import { parseString } from "@fast-csv/parse";
 import { randomUUID } from "crypto";
+import fs from "fs";
+import path from "path";
 
 import config from "../../config.json";
 import { Article } from "../models/article";
 import { Logger } from "../utils";
 
-// TODO: Cache data to avoid fetching in dev mode.
+const cachePath = path.resolve(__dirname, "cache.json");
 
 export const fetchArticles = async (): Promise<Article[]> => {
+  const cache = readFromCache();
+  if (process.env.DEV && cache) {
+    Logger.log("Reading articles from cache.");
+    return cache;
+  }
+
   Logger.log("Fetching articels.");
 
   const response = await fetch(config.articlesDownloadURL);
@@ -25,9 +33,24 @@ export const fetchArticles = async (): Promise<Article[]> => {
       .on("end", () => {
         Logger.log(`Loaded ${articles.length} articles.`);
         Logger.debug("Articles", JSON.stringify(articles));
+
+        if (process.env.DEV) {
+          Logger.log("Writing articles to cache.");
+          fs.writeFileSync(cachePath, JSON.stringify(articles));
+        }
+
         resolve(articles);
       });
   });
+};
+
+const readFromCache = (): Article[] | null => {
+  try {
+    const cache = fs.readFileSync(cachePath, { encoding: "utf-8" });
+    return JSON.parse(cache);
+  } catch {
+    return null;
+  }
 };
 
 type RawArticle = {
