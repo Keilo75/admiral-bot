@@ -4,10 +4,10 @@ import { t } from "i18next";
 import { buildArticleEmbed } from "../models/article";
 import { type Command } from "../models/command";
 
-export const randomArticle: Command = {
+export const random: Command = {
   data: new SlashCommandBuilder()
-    .setName("random-article")
-    .setDescription(t("commands.random-article")),
+    .setName("random")
+    .setDescription(t("commands.random")),
   execute: async ({ interaction, context }) => {
     const article = context.getRandomArticle();
 

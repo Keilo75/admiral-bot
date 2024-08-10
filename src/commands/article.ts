@@ -16,6 +16,8 @@ export const article: Command = {
     ),
   execute: async ({ interaction }) => {
     await interaction.reply("Received!");
+    // TODO: Display error if article doesnt exist
+    // TODO: Display article
   },
   autocomplete: async ({ interaction, context }) => {
     const query = interaction.options.getFocused();
