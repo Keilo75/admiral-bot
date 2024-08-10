@@ -17,4 +17,7 @@ export const article: Command = {
   execute: async ({ interaction }) => {
     await interaction.reply("Received!");
   },
+  autocomplete: async ({ interaction }) => {
+    console.log(interaction.options.getFocused());
+  },
 };

@@ -44,6 +44,19 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isAutocomplete()) return;
+
+  const { commandName } = interaction;
+  const command = commands.get(commandName);
+  try {
+    await command?.autocomplete?.({ interaction, context });
+  } catch (err) {
+    Logger.error(`Error while autocompleting ${commandName}.`, err);
+    await interaction.respond([]);
+  }
+});
+
 fetchArticles()
   .then((articles) => {
     context.populateArticles(articles);

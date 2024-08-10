@@ -1,4 +1,5 @@
 import type {
+  AutocompleteInteraction,
   ChatInputCommandInteraction,
   SlashCommandBuilder,
   SlashCommandOptionsOnlyBuilder,
@@ -6,12 +7,13 @@ import type {
 
 import { type Context } from "./context";
 
-type ExecuteArgs = {
-  interaction: ChatInputCommandInteraction;
+type Args<I> = {
+  interaction: I;
   context: Context;
 };
 
 export type Command = {
   data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
-  execute: (args: ExecuteArgs) => Promise<void>;
+  execute: (args: Args<ChatInputCommandInteraction>) => Promise<void>;
+  autocomplete?: (args: Args<AutocompleteInteraction>) => Promise<void>;
 };
