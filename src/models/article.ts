@@ -3,6 +3,11 @@ import { t } from "i18next";
 
 type ArticleLink = "reddit" | "medium";
 
+export type FilteredArticle = {
+  name: string;
+  value: string;
+};
+
 export type Article = {
   id: string;
   title: string;

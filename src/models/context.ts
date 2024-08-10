@@ -1,10 +1,13 @@
-import { Article } from "./article";
+import { t } from "i18next";
+
+import type { Article, FilteredArticle } from "./article";
 
 export class Context {
   private articles: Article[];
 
   private recentRandomArticleIds: string[];
   private RECENT_ARTICLE_LIMIT = 10;
+  private FILTER_ARTICLE_LIMIT = 5;
 
   constructor() {
     this.articles = [];
@@ -29,5 +32,34 @@ export class Context {
     }
 
     return article;
+  }
+
+  public filterArticlesByTitleOrIdentifier(
+    titleOrIdentifier: string
+  ): FilteredArticle[] {
+    const filtered: FilteredArticle[] = [];
+
+    const query = titleOrIdentifier.toLowerCase();
+    for (const article of this.articles) {
+      const doesTitleMatch = article.title.toLowerCase().includes(query);
+      const doesArticleMatch =
+        doesTitleMatch ||
+        article.accident.identifiers.some((i) =>
+          i.toLowerCase().includes(query)
+        );
+
+      if (doesArticleMatch) {
+        const name = doesTitleMatch
+          ? article.title
+          : t("format.list-short", { values: article.accident.identifiers });
+
+        filtered.push({ name, value: article.id });
+        if (filtered.length >= this.FILTER_ARTICLE_LIMIT) {
+          break;
+        }
+      }
+    }
+
+    return filtered;
   }
 }
