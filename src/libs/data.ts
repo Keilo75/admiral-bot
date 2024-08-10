@@ -50,7 +50,6 @@ const readFromCache = (): Article[] | null => {
     const cache = fs.readFileSync(cachePath, { encoding: "utf-8" });
     const articles: Article[] = JSON.parse(cache);
 
-    // TODO: Use zod to parse schema
     return articles.map((a) => ({
       ...a,
       releaseDate: new Date(a.releaseDate),
