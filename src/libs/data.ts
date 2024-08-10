@@ -25,29 +25,40 @@ export const fetchArticles = async (): Promise<Article[]> => {
   Logger.debug("Extracted Text", text);
 
   const articles: Article[] = [];
-
-  return new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     parseString(text, { headers: true })
       .on("data", (row) => articles.push(convertRawArticle(row)))
       .on("error", (err) => reject(err))
       .on("end", () => {
-        Logger.log(`Loaded ${articles.length} articles.`);
-        Logger.debug("Articles", JSON.stringify(articles));
-
-        if (process.env.DEV) {
-          Logger.log("Writing articles to cache.");
-          fs.writeFileSync(cachePath, JSON.stringify(articles));
-        }
-
-        resolve(articles);
+        resolve();
       });
   });
+
+  Logger.log(`Loaded ${articles.length} articles.`);
+  Logger.debug("Articles", JSON.stringify(articles));
+
+  if (process.env.DEV) {
+    Logger.log("Writing articles to cache.");
+    fs.writeFileSync(cachePath, JSON.stringify(articles));
+  }
+
+  return articles;
 };
 
 const readFromCache = (): Article[] | null => {
   try {
     const cache = fs.readFileSync(cachePath, { encoding: "utf-8" });
-    return JSON.parse(cache);
+    const articles: Article[] = JSON.parse(cache);
+
+    // TODO: Use zod to parse schema
+    return articles.map((a) => ({
+      ...a,
+      releaseDate: new Date(a.releaseDate),
+      accident: {
+        ...a.accident,
+        dates: a.accident.dates.map((d) => new Date(d)),
+      },
+    }));
   } catch {
     return null;
   }
