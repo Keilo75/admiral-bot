@@ -34,7 +34,7 @@ type RawArticle = {
   "Identifier(s)": string;
   "Accident Type": string;
   "Date(s)": string;
-  "Aircraft(s)": string;
+  Aircraft: string;
   "Location(s)": string;
   "Release Date": string;
   Reddit: string;
@@ -51,7 +51,7 @@ const convertRawArticle = (raw: RawArticle): Article => {
 
   const identifiers = raw["Identifier(s)"].split("/");
   const dates = raw["Date(s)"].split("/").map((d) => new Date(d));
-  const aircrafts = raw["Aircraft(s)"].split("/");
+  const aircraft = raw["Aircraft"].split("/");
   const locations = raw["Location(s)"].split("/");
 
   const releaseDate = new Date(raw["Release Date"]);
@@ -63,7 +63,7 @@ const convertRawArticle = (raw: RawArticle): Article => {
       type,
       identifiers,
       dates,
-      aircrafts,
+      aircraft,
       locations,
     },
     links: { reddit, medium },

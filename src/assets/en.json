@@ -7,5 +7,29 @@
   "descriptions": {
     "ping": "Shows the bot's current ping.",
     "random-article": "Retrieve a random article."
+  },
+  "article": {
+    "accident-type": "Accident Type",
+    "accident-date_one": "Accident Date",
+    "accident-date_other": "Accident Dates",
+    "aircraft_one": "Aircraft",
+    "aircraft_other": "Aircraft",
+    "location_one": "Location",
+    "location_other": "Locations",
+    "link_one": "Link",
+    "link_other": "Links",
+    "release-date": "Release Date"
+  },
+  "links": {
+    "reddit": "Reddit",
+    "medium": "Medium"
+  },
+  "format": {
+    "date": "{{date, date}}",
+    "dates": "{{dates, date}}",
+    "list-short": "{{values, list-short}}",
+    "list-long": "{{values, list-long}}",
+    "sep-short": " / ",
+    "sep-long": " and "
   }
 }
