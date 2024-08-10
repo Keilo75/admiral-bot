@@ -16,8 +16,6 @@ export class Context {
   }
 
   public getRandomArticle(): Article {
-    return this.articles[0];
-
     let article: Article;
 
     do {
