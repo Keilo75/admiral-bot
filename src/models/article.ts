@@ -25,7 +25,7 @@ export const buildArticleEmbed = (article: Article): EmbedBuilder => {
   );
 
   return new EmbedBuilder()
-    .setColor("#FFFFFF")
+    .setColor("#C6A6C2")
     .setTitle(article.title)
     .setDescription(t("format.list-long", { values: accident.identifiers }))
     .addFields(
