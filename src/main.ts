@@ -53,7 +53,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
     await command?.autocomplete?.({ interaction, context });
   } catch (err) {
     Logger.error(`Error while autocompleting ${commandName}.`, err);
-    await interaction.respond([]);
   }
 });
 
