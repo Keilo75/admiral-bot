@@ -4,7 +4,7 @@
     "pinging": ":timer: **|** Pinging...",
     "pinged": ":timer: **|** Current roundtrip latency is {{latency}}ms."
   },
-  "descriptions": {
+  "commands": {
     "ping": "Shows the bot's current ping.",
     "random-article": "Retrieve a random article."
   },
