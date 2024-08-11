@@ -40,7 +40,7 @@
   },
   "about": {
     "title": "About",
-    "description": "This is a bot to search through all published articles of Admiral Cloudberg.\n\n- Use the /random command to retrieve a random article.\n- Use the /article command to find a specific article by title or flight number.\n- Use the /search command to search all articles.",
+    "description": "A bot to search through all published articles of Admiral Cloudberg.\n\n- Use the /random command to retrieve a random article.\n- Use the /article command to find a specific article by title or flight number.\n- Use the /search command to search all articles.",
     "links-title": "Links",
     "links": "[Spreadsheet](https://github.com/Keilo75/admiral-bot)\n[GitHub](https://github.com/Keilo75/admiral-bot)",
     "footer": "Made by Keilo75"
