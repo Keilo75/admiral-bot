@@ -31,7 +31,11 @@ export const article: Command = {
   },
   autocomplete: async ({ interaction, context }) => {
     const query = interaction.options.getFocused();
-    const filtered = context.filterArticlesByTitleOrIdentifier(query);
+    const filtered =
+      query.trim() === ""
+        ? []
+        : context.filterArticlesByTitleOrIdentifier(query);
+
     await interaction.respond(filtered);
   },
 };
