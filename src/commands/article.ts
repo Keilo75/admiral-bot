@@ -14,6 +14,7 @@ export const article: Command = {
         .setDescription(t("commands.article-query"))
         .setRequired(true)
         .setAutocomplete(true)
+        .setMaxLength(100)
     ),
   execute: async ({ interaction, context }) => {
     const selectedID = interaction.options.getString("query");

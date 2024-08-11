@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, hyperlink } from "discord.js";
 import { t } from "i18next";
 
 import { type Article } from "./article";
@@ -6,8 +6,8 @@ import { type Article } from "./article";
 const EMBED_COLOR = "#C6A6C2";
 
 const createMarkdownLinks = (links: Article["links"]) =>
-  Object.entries(links).map(
-    ([site, link]) => `[${t(`links.${site}`)}](${link})`
+  Object.entries(links).map(([site, link]) =>
+    hyperlink(t(`links.${site}`), link)
   );
 export const buildArticleEmbed = (article: Article): EmbedBuilder => {
   const { accident, links } = article;

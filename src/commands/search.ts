@@ -21,6 +21,7 @@ export const search: Command = {
         .setName("query")
         .setDescription(t("commands.search-query"))
         .setRequired(true)
+        .setMaxLength(100)
     ),
   execute: async ({ interaction, context }) => {
     const column = interaction.options.getString("column")!;
