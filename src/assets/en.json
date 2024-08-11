@@ -7,6 +7,7 @@
     "no-results": ":mag_right: **|** No search results found for `{{query, escape-markdown}}` in `{{column}}` column."
   },
   "commands": {
+    "about": "Get information about the bot.",
     "ping": "Show the bot's current ping.",
     "random": "Retrieve a random article.",
     "article": "Display information about a single article.",
@@ -36,6 +37,13 @@
     "prev": "Previous Page",
     "next": "Next Page",
     "footer": "{{start}} - {{end}} of {{max}} | Page {{page}} / {{maxPage}}"
+  },
+  "about": {
+    "title": "About",
+    "description": "This is a bot to search through all published articles of Admiral Cloudberg.\n\n- Use the /random command to retrieve a random article.\n- Use the /article command to find a specific article by title or flight number.\n- Use the /search command to search all articles.",
+    "links-title": "Links",
+    "links": "[Spreadsheet](https://github.com/Keilo75/admiral-bot)\n[GitHub](https://github.com/Keilo75/admiral-bot)",
+    "footer": "Made by Keilo75"
   },
   "links": {
     "reddit": "Reddit",

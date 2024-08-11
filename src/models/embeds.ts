@@ -75,3 +75,12 @@ export const buildSearchResultEmbed = ({
     )
     .setFooter({ text: t("search.footer", footer) });
 };
+
+export const buildAboutEmbed = (): EmbedBuilder => {
+  return new EmbedBuilder()
+    .setColor(EMBED_COLOR)
+    .setTitle(t("about.title"))
+    .setDescription(t("about.description"))
+    .addFields({ name: t("about.links-title"), value: t("about.links") })
+    .setFooter({ text: t("about.footer") });
+};
