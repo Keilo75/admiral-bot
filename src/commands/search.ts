@@ -3,6 +3,7 @@ import { t } from "i18next";
 
 import { SEARCHABLE_COLUMNS } from "../models/article";
 import { type Command } from "../models/command";
+import { buildSearchResultEmbed } from "../models/embeds";
 
 export const search: Command = {
   data: new SlashCommandBuilder()
@@ -25,11 +26,14 @@ export const search: Command = {
     const column = interaction.options.getString("column")!;
     const query = interaction.options.getString("query")!;
 
-    // @ts-expect-error As the `column` option has choices, it must be a `SearchColumn`.
+    // @ts-expect-error As the `column` option has choices, it must be a `SearchableColumn`.
     const pages = context.filterArticlesByQuery(column, query);
-    console.log(pages.reduce((acc, cur) => acc + cur.length, 0));
-    // TODO: Display
 
-    await interaction.reply(query);
+    // TODO: Display pagination
+    // 1 - 3 of 200 | Page 1 / 3
+    // TODO: Display message if no search results are found.
+
+    const embed = buildSearchResultEmbed(pages[0]);
+    await interaction.reply({ embeds: [embed] });
   },
 };

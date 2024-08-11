@@ -28,6 +28,10 @@
     "link_other": "Links",
     "release-date": "Release Date"
   },
+  "search": {
+    "results": "Search Results",
+    "item": "{{identifiers, list-long}} ({{links, list-dots}})"
+  },
   "links": {
     "reddit": "Reddit",
     "medium": "Medium"
@@ -35,7 +39,9 @@
   "format": {
     "list-short": "{{values, list-short}}",
     "list-long": "{{values, list-long}}",
+    "list-dots": "{{values, list-dots}}",
     "sep-short": " / ",
-    "sep-long": " and "
+    "sep-long": " and ",
+    "sep-dots": " · "
   }
 }

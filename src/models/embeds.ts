@@ -3,15 +3,19 @@ import { t } from "i18next";
 
 import { type Article } from "./article";
 
-export const buildArticleEmbed = (article: Article): EmbedBuilder => {
-  const { accident } = article;
+const EMBED_COLOR = "#C6A6C2";
 
-  const markdownLinks = Object.entries(article.links).map(
+const createMarkdownLinks = (links: Article["links"]) =>
+  Object.entries(links).map(
     ([site, link]) => `[${t(`links.${site}`)}](${link})`
   );
+export const buildArticleEmbed = (article: Article): EmbedBuilder => {
+  const { accident, links } = article;
+
+  const markdownLinks = createMarkdownLinks(links);
 
   return new EmbedBuilder()
-    .setColor("#C6A6C2")
+    .setColor(EMBED_COLOR)
     .setTitle(article.title)
     .setDescription(t("format.list-long", { values: accident.identifiers }))
     .addFields(
@@ -38,5 +42,20 @@ export const buildArticleEmbed = (article: Article): EmbedBuilder => {
         value: article.releaseDate,
         inline: true,
       }
+    );
+};
+
+export const buildSearchResultEmbed = (articles: Article[]): EmbedBuilder => {
+  return new EmbedBuilder()
+    .setColor(EMBED_COLOR)
+    .setTitle(t("search.results"))
+    .addFields(
+      articles.map(({ title, links, accident }) => ({
+        name: title,
+        value: t("search.item", {
+          identifiers: accident.identifiers,
+          links: createMarkdownLinks(links),
+        }),
+      }))
     );
 };

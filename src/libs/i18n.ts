@@ -19,3 +19,7 @@ i18next.services.formatter?.add("list-short", (values: string[]) => {
 i18next.services.formatter?.add("list-long", (values: string[]) => {
   return values.join(t("format.sep-long"));
 });
+
+i18next.services.formatter?.add("list-dots", (values: string[]) => {
+  return values.join(t("format.sep-dots"));
+});
