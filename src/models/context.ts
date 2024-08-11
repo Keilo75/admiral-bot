@@ -5,13 +5,20 @@ import type { Article, FilteredArticle } from "./article";
 export class Context {
   private articles: Article[];
 
-  private recentRandomArticleIds: string[];
+  private recentArticleIDs: string[];
   private RECENT_ARTICLE_LIMIT = 10;
   private FILTER_ARTICLE_LIMIT = 5;
 
   constructor() {
     this.articles = [];
-    this.recentRandomArticleIds = [];
+    this.recentArticleIDs = [];
+  }
+
+  private addToRecentArticleIDs(id: string) {
+    this.recentArticleIDs.push(id);
+    if (this.recentArticleIDs.length > this.RECENT_ARTICLE_LIMIT) {
+      this.recentArticleIDs.shift();
+    }
   }
 
   public populateArticles(articles: Article[]) {
@@ -24,18 +31,15 @@ export class Context {
     do {
       const randomIndex = Math.floor(Math.random() * this.articles.length);
       article = this.articles[randomIndex];
-    } while (this.recentRandomArticleIds.includes(article.id));
+    } while (this.recentArticleIDs.includes(article.id));
 
-    this.recentRandomArticleIds.push(article.id);
-    if (this.recentRandomArticleIds.length > this.RECENT_ARTICLE_LIMIT) {
-      this.recentRandomArticleIds.shift();
-    }
-
+    this.addToRecentArticleIDs(article.id);
     return article;
   }
 
   public getArticleByID(id: string): Article | null {
     const article = this.articles.find((a) => a.id === id);
+    if (article) this.addToRecentArticleIDs(article.id);
     return article || null;
   }
 
