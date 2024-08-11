@@ -24,21 +24,27 @@ export const search: Command = {
         .setMaxLength(100)
     ),
   execute: async ({ interaction, context }) => {
-    const column = interaction.options.getString("column")!;
     const query = interaction.options.getString("query")!;
 
-    const selectedColumn = SEARCHABLE_COLUMNS.find((c) => c.value === column)!;
+    const selectedColumn = SEARCHABLE_COLUMNS.find(
+      (c) => c.value === interaction.options.getString("column")!
+    )!;
+    const column = selectedColumn.name;
+
     // @ts-expect-error As the `column` option has choices, it must be a `SearchableColumn`.
-    const pages = context.filterArticlesByQuery(column, query);
+    const articles = context.filterArticlesByQuery(selectedColumn.value, query);
+    if (articles.length === 0) {
+      await interaction.reply(t("messages.no-results", { query, column }));
+      return;
+    }
 
     // TODO: Display pagination
     // 1 - 3 of 200 | Page 1 / 3
-    // TODO: Display message if no search results are found.
 
     const embed = buildSearchResultEmbed({
-      articles: pages[0],
+      articles: articles.slice(0, 5),
       query,
-      column: selectedColumn.name,
+      column,
     });
     await interaction.reply({ embeds: [embed] });
   },

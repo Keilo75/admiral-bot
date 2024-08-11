@@ -10,9 +10,6 @@ const createMarkdownLinks = (links: Article["links"]) =>
     hyperlink(t(`links.${site}`), link)
   );
 
-const escapeUserInput = (str: string) =>
-  str.replace(/((_|\*|~|`|\|){2})/g, "\\$1");
-
 export const buildArticleEmbed = (article: Article): EmbedBuilder => {
   const { accident, links } = article;
 
@@ -63,9 +60,7 @@ export const buildSearchResultEmbed = ({
   return new EmbedBuilder()
     .setColor(EMBED_COLOR)
     .setTitle(t("search.results"))
-    .setDescription(
-      t("search.matches", { query: escapeUserInput(query), column })
-    )
+    .setDescription(t("search.matches", { query, column }))
     .addFields(
       articles.map(({ title, links, accident }) => ({
         name: title,

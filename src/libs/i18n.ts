@@ -1,3 +1,4 @@
+import { escapeMarkdown } from "discord.js";
 import i18next, { t } from "i18next";
 
 import en from "../assets/en.json";
@@ -22,4 +23,8 @@ i18next.services.formatter?.add("list-long", (values: string[]) => {
 
 i18next.services.formatter?.add("list-dots", (values: string[]) => {
   return values.join(t("format.sep-dots"));
+});
+
+i18next.services.formatter?.add("escape-markdown", (value: string) => {
+  return escapeMarkdown(value.replace(/`/g, ""));
 });

@@ -21,8 +21,6 @@ export type Article = {
   };
 };
 
-export type PaginatedArticles = Article[][];
-
 export type SearchableColumn =
   | "title"
   | "accident.identifiers"

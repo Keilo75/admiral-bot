@@ -4,7 +4,6 @@ import {
   type Article,
   type FilteredArticle,
   getArticleValueByColumn,
-  type PaginatedArticles,
   type SearchableColumn,
 } from "./article";
 
@@ -82,7 +81,7 @@ export class Context {
   public filterArticlesByQuery(
     column: SearchableColumn,
     query: string
-  ): PaginatedArticles {
+  ): Article[] {
     const filtered: Article[] = [];
 
     const lowercaseQuery = query.toLowerCase();
@@ -91,21 +90,6 @@ export class Context {
       if (value.toLowerCase().includes(lowercaseQuery)) filtered.push(article);
     }
 
-    const pages: PaginatedArticles = [];
-
-    for (const article of filtered) {
-      const currentPage = pages.at(-1);
-      if (
-        currentPage === undefined ||
-        currentPage.length >= this.PAGE_ARTICLE_LIMIT
-      ) {
-        pages.push([article]);
-        continue;
-      }
-
-      currentPage.push(article);
-    }
-
-    return pages;
+    return filtered;
   }
 }
