@@ -25,7 +25,10 @@ export const search: Command = {
     const column = interaction.options.getString("column")!;
     const query = interaction.options.getString("query")!;
 
-    context.filterArticlesByQuery(column, query);
+    // @ts-expect-error As the `column` option has choices, it must be a `SearchColumn`.
+    const pages = context.filterArticlesByQuery(column, query);
+    console.log(pages.reduce((acc, cur) => acc + cur.length, 0));
+
     await interaction.reply(query);
   },
 };

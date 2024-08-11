@@ -1,6 +1,12 @@
 import { t } from "i18next";
 
-import type { Article, FilteredArticle, PaginatedArticles } from "./article";
+import {
+  type Article,
+  type FilteredArticle,
+  getArticleValueByColumn,
+  type PaginatedArticles,
+  type SearchableColumn,
+} from "./article";
 
 export class Context {
   private articles: Article[];
@@ -74,10 +80,16 @@ export class Context {
   }
 
   public filterArticlesByQuery(
-    column: string,
+    column: SearchableColumn,
     query: string
   ): PaginatedArticles {
     const filtered: Article[] = [];
+
+    const lowercaseQuery = query.toLowerCase();
+    for (const article of this.articles) {
+      const value = getArticleValueByColumn(article, column);
+      if (value.toLowerCase().includes(lowercaseQuery)) filtered.push(article);
+    }
 
     const pages: PaginatedArticles = [];
 
