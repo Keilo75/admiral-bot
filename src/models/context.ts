@@ -1,6 +1,6 @@
 import { t } from "i18next";
 
-import type { Article, FilteredArticle } from "./article";
+import type { Article, FilteredArticle, PaginatedArticles } from "./article";
 
 export class Context {
   private articles: Article[];
@@ -8,6 +8,7 @@ export class Context {
   private recentArticleIDs: string[];
   private RECENT_ARTICLE_LIMIT = 10;
   private FILTER_ARTICLE_LIMIT = 5;
+  private PAGE_ARTICLE_LIMIT = 10;
 
   constructor() {
     this.articles = [];
@@ -70,5 +71,42 @@ export class Context {
     }
 
     return filtered;
+  }
+
+  public filterArticlesByQuery(
+    column: string,
+    query: string
+  ): PaginatedArticles {
+    const filtered: Article[] = [];
+
+    const lowercaseQuery = query.toLowerCase();
+
+    for (const article of this.articles) {
+      const { title, accident } = article;
+      const { type, identifiers, aircraft, locations } = accident;
+
+      const dates = t("format.dates", { dates: accident.dates });
+      const columns = [title, type, identifiers, aircraft, locations, dates];
+
+      if (columns.toString().toLowerCase().includes(lowercaseQuery))
+        filtered.push(article);
+    }
+
+    const pages: PaginatedArticles = [];
+
+    for (const article of filtered) {
+      const currentPage = pages.at(-1);
+      if (
+        currentPage === undefined ||
+        currentPage.length >= this.PAGE_ARTICLE_LIMIT
+      ) {
+        pages.push([article]);
+        continue;
+      }
+
+      currentPage.push(article);
+    }
+
+    return pages;
   }
 }

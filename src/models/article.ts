@@ -22,6 +22,17 @@ export type Article = {
   };
 };
 
+export type PaginatedArticles = Article[][];
+
+export const SEARCHABLE_COLUMNS = [
+  { name: t("article.title"), value: "title" },
+  { name: t("article.identifiers"), value: "accident.identifiers" },
+  { name: t("article.accident-type"), value: "accident.type" },
+  { name: t("article.accident-date", { count: 2 }), value: "accident.dates" },
+  { name: t("article.aircraft", { count: 2 }), value: "accident.aircraft" },
+  { name: t("article.location", { count: 2 }), value: "accident.locations" },
+];
+
 export const buildArticleEmbed = (article: Article): EmbedBuilder => {
   const { accident } = article;
 

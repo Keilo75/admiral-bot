@@ -11,7 +11,7 @@ export const article: Command = {
     .addStringOption((o) =>
       o
         .setName("query")
-        .setDescription(t("commands.query"))
+        .setDescription(t("commands.article-query"))
         .setRequired(true)
         .setAutocomplete(true)
     ),
