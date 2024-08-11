@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from "discord.js";
 import { t } from "i18next";
 
-import { buildArticleEmbed } from "../models/article";
 import { type Command } from "../models/command";
+import { buildArticleEmbed } from "../models/embeds";
 
 export const random: Command = {
   data: new SlashCommandBuilder()

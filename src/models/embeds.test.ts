@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { type Article, buildArticleEmbed } from "./article";
+import { type Article } from "./article";
+import { buildArticleEmbed } from "./embeds";
 
 const ARTICLE: Article = {
   id: "",
