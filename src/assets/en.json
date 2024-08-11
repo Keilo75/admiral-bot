@@ -30,6 +30,7 @@
   },
   "search": {
     "results": "Search Results",
+    "matches": "Showing matches for `{{query}}` in `{{column}}` column.",
     "item": "{{identifiers, list-long}} ({{links, list-dots}})"
   },
   "links": {

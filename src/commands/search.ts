@@ -27,6 +27,7 @@ export const search: Command = {
     const column = interaction.options.getString("column")!;
     const query = interaction.options.getString("query")!;
 
+    const selectedColumn = SEARCHABLE_COLUMNS.find((c) => c.value === column)!;
     // @ts-expect-error As the `column` option has choices, it must be a `SearchableColumn`.
     const pages = context.filterArticlesByQuery(column, query);
 
@@ -34,7 +35,11 @@ export const search: Command = {
     // 1 - 3 of 200 | Page 1 / 3
     // TODO: Display message if no search results are found.
 
-    const embed = buildSearchResultEmbed(pages[0]);
+    const embed = buildSearchResultEmbed({
+      articles: pages[0],
+      query,
+      column: selectedColumn.name,
+    });
     await interaction.reply({ embeds: [embed] });
   },
 };

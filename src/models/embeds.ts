@@ -9,6 +9,10 @@ const createMarkdownLinks = (links: Article["links"]) =>
   Object.entries(links).map(([site, link]) =>
     hyperlink(t(`links.${site}`), link)
   );
+
+const escapeUserInput = (str: string) =>
+  str.replace(/((_|\*|~|`|\|){2})/g, "\\$1");
+
 export const buildArticleEmbed = (article: Article): EmbedBuilder => {
   const { accident, links } = article;
 
@@ -45,10 +49,23 @@ export const buildArticleEmbed = (article: Article): EmbedBuilder => {
     );
 };
 
-export const buildSearchResultEmbed = (articles: Article[]): EmbedBuilder => {
+type SearchResultEmbedOptions = {
+  articles: Article[];
+  query: string;
+  column: string;
+};
+
+export const buildSearchResultEmbed = ({
+  articles,
+  query,
+  column,
+}: SearchResultEmbedOptions): EmbedBuilder => {
   return new EmbedBuilder()
     .setColor(EMBED_COLOR)
     .setTitle(t("search.results"))
+    .setDescription(
+      t("search.matches", { query: escapeUserInput(query), column })
+    )
     .addFields(
       articles.map(({ title, links, accident }) => ({
         name: title,
