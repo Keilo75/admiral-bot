@@ -33,7 +33,6 @@
     "medium": "Medium"
   },
   "format": {
-    "dates": "{{dates, dates}}",
     "list-short": "{{values, list-short}}",
     "list-long": "{{values, list-long}}",
     "sep-short": " / ",

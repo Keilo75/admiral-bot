@@ -12,16 +12,6 @@ i18next.init({
   interpolation: { escapeValue: false },
 });
 
-i18next.services.formatter?.add("dates", (values: Date[]) => {
-  const formatDate = (date: Date) => {
-    return date.toISOString().slice(0, 10);
-  };
-
-  return t("format.list-short", {
-    values: values.map((d) => formatDate(d)),
-  });
-});
-
 i18next.services.formatter?.add("list-short", (values: string[]) => {
   return values.join(t("format.sep-short"));
 });

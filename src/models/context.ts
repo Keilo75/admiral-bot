@@ -79,19 +79,6 @@ export class Context {
   ): PaginatedArticles {
     const filtered: Article[] = [];
 
-    const lowercaseQuery = query.toLowerCase();
-
-    for (const article of this.articles) {
-      const { title, accident } = article;
-      const { type, identifiers, aircraft, locations } = accident;
-
-      const dates = t("format.dates", { dates: accident.dates });
-      const columns = [title, type, identifiers, aircraft, locations, dates];
-
-      if (columns.toString().toLowerCase().includes(lowercaseQuery))
-        filtered.push(article);
-    }
-
     const pages: PaginatedArticles = [];
 
     for (const article of filtered) {

@@ -11,12 +11,12 @@ export type FilteredArticle = {
 export type Article = {
   id: string;
   title: string;
-  releaseDate: Date;
+  releaseDate: string;
   links: Partial<Record<ArticleLink, string>>;
   accident: {
     type: string;
     identifiers: string[];
-    dates: Date[];
+    dates: string[];
     aircraft: string[];
     locations: string[];
   };
@@ -48,7 +48,7 @@ export const buildArticleEmbed = (article: Article): EmbedBuilder => {
       { name: t("article.accident-type"), value: accident.type },
       {
         name: t("article.accident-date", { count: accident.dates.length }),
-        value: t("format.dates", { dates: accident.dates }),
+        value: t("format.list-short", { values: accident.dates }),
       },
       {
         name: t("article.aircraft", { count: accident.aircraft.length }),
@@ -65,7 +65,7 @@ export const buildArticleEmbed = (article: Article): EmbedBuilder => {
       },
       {
         name: t("article.release-date"),
-        value: t("format.dates", { dates: [article.releaseDate] }),
+        value: article.releaseDate,
         inline: true,
       }
     );

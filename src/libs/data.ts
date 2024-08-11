@@ -48,16 +48,7 @@ export const fetchArticles = async (): Promise<Article[]> => {
 const readFromCache = (): Article[] | null => {
   try {
     const cache = fs.readFileSync(cachePath, { encoding: "utf-8" });
-    const articles: Article[] = JSON.parse(cache);
-
-    return articles.map((a) => ({
-      ...a,
-      releaseDate: new Date(a.releaseDate),
-      accident: {
-        ...a.accident,
-        dates: a.accident.dates.map((d) => new Date(d)),
-      },
-    }));
+    return JSON.parse(cache);
   } catch {
     return null;
   }
@@ -81,14 +72,14 @@ const convertRawArticle = (raw: RawArticle): Article => {
     Reddit: reddit,
     Medium: medium,
     "Accident Type": type,
+    "Release Date": releaseDate,
   } = raw;
 
   const identifiers = raw["Identifier(s)"].split("/");
-  const dates = raw["Date(s)"].split("/").map((d) => new Date(d));
+  const dates = raw["Date(s)"].split("/");
   const aircraft = raw["Aircraft"].split("/");
   const locations = raw["Location(s)"].split("/");
 
-  const releaseDate = new Date(raw["Release Date"]);
   return {
     id: randomUUID(),
     title,

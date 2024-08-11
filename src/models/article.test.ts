@@ -5,13 +5,13 @@ import { type Article, buildArticleEmbed } from "./article";
 const ARTICLE: Article = {
   id: "",
   title: "TEST",
-  releaseDate: new Date(2000, 0, 1),
+  releaseDate: "2000-01-01",
   links: { reddit: "reddit.com", medium: "medium.com" },
   accident: {
     type: "Accident",
     identifiers: ["Flight 1"],
     aircraft: ["Aircraft 1"],
-    dates: [new Date(1970, 0, 1)],
+    dates: ["1970-01-01"],
     locations: ["Earth"],
   },
 };
@@ -43,7 +43,7 @@ describe("build article embed", () => {
         type: "Accident",
         identifiers: ["Flight 1", "Flight 2"],
         aircraft: ["Aircraft 1", "Aircraft 2"],
-        dates: [new Date(1970, 0, 1), new Date(1970, 0, 2)],
+        dates: ["1970-01-01", "1970-01-02"],
         locations: ["Country 1", "Country 2"],
       },
     });
@@ -74,7 +74,7 @@ describe("build article embed", () => {
         type: "Accident",
         identifiers: ["Flight 1", "Flight 2"],
         aircraft: ["Aircraft 1"],
-        dates: [new Date(1970, 0, 1)],
+        dates: ["1970-01-01"],
         locations: ["Earth"],
       },
     });
