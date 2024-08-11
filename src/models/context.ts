@@ -34,6 +34,11 @@ export class Context {
     return article;
   }
 
+  public getArticleByID(id: string): Article | null {
+    const article = this.articles.find((a) => a.id === id);
+    return article || null;
+  }
+
   public filterArticlesByTitleOrIdentifier(
     titleOrIdentifier: string
   ): FilteredArticle[] {

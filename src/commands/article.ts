@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 import { t } from "i18next";
 
+import { buildArticleEmbed } from "../models/article";
 import { type Command } from "../models/command";
 
 export const article: Command = {
@@ -14,10 +15,19 @@ export const article: Command = {
         .setRequired(true)
         .setAutocomplete(true)
     ),
-  execute: async ({ interaction }) => {
-    await interaction.reply("Received!");
-    // TODO: Display error if article doesnt exist
-    // TODO: Display article
+  execute: async ({ interaction, context }) => {
+    const selectedID = interaction.options.getString("query");
+    const article = context.getArticleByID(selectedID || "");
+    if (article === null) {
+      await interaction.reply({
+        content: t("messages.invalid-article-id"),
+        ephemeral: true,
+      });
+      return;
+    }
+
+    const embed = buildArticleEmbed(article);
+    await interaction.reply({ embeds: [embed] });
   },
   autocomplete: async ({ interaction, context }) => {
     const query = interaction.options.getFocused();
