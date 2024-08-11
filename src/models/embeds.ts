@@ -2,6 +2,7 @@ import { EmbedBuilder, hyperlink } from "discord.js";
 import { t } from "i18next";
 
 import { type Article } from "./article";
+import { PaginatedArticles } from "./pagination";
 
 const EMBED_COLOR = "#C6A6C2";
 
@@ -47,16 +48,18 @@ export const buildArticleEmbed = (article: Article): EmbedBuilder => {
 };
 
 type SearchResultEmbedOptions = {
-  articles: Article[];
+  paginatedArticles: PaginatedArticles;
   query: string;
   column: string;
 };
 
 export const buildSearchResultEmbed = ({
-  articles,
+  paginatedArticles,
   query,
   column,
 }: SearchResultEmbedOptions): EmbedBuilder => {
+  const { articles, footer } = paginatedArticles;
+
   return new EmbedBuilder()
     .setColor(EMBED_COLOR)
     .setTitle(t("search.results"))
@@ -69,5 +72,6 @@ export const buildSearchResultEmbed = ({
           links: createMarkdownLinks(links),
         }),
       }))
-    );
+    )
+    .setFooter({ text: t("search.footer", footer) });
 };

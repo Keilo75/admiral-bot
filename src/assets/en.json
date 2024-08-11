@@ -32,7 +32,10 @@
   "search": {
     "results": "Search Results",
     "matches": "Showing matches for `{{query, escape-markdown}}` in `{{column}}` column.",
-    "item": "{{identifiers, list-long}} ({{links, list-dots}})"
+    "item": "{{identifiers, list-long}} ({{links, list-dots}})",
+    "prev": "Prev Page",
+    "next": "Next Page",
+    "footer": "{{start}} - {{end}} of {{max}} | Page {{page}} / {{maxPage}}"
   },
   "links": {
     "reddit": "Reddit",

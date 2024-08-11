@@ -13,7 +13,6 @@ export class Context {
   private recentArticleIDs: string[];
   private RECENT_ARTICLE_LIMIT = 10;
   private FILTER_ARTICLE_LIMIT = 5;
-  private PAGE_ARTICLE_LIMIT = 10;
 
   constructor() {
     this.articles = [];

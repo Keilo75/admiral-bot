@@ -1,9 +1,16 @@
-import { SlashCommandBuilder } from "discord.js";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ComponentType,
+  SlashCommandBuilder,
+} from "discord.js";
 import { t } from "i18next";
 
 import { SEARCHABLE_COLUMNS } from "../models/article";
 import { type Command } from "../models/command";
 import { buildSearchResultEmbed } from "../models/embeds";
+import { Pagination } from "../models/pagination";
 
 export const search: Command = {
   data: new SlashCommandBuilder()
@@ -38,14 +45,45 @@ export const search: Command = {
       return;
     }
 
-    // TODO: Display pagination
-    // 1 - 3 of 200 | Page 1 / 3
+    const pagination = new Pagination(articles);
 
-    const embed = buildSearchResultEmbed({
-      articles: articles.slice(0, 5),
-      query,
-      column,
+    const createSearchMessage = () => {
+      const disabledButtons = pagination.getDisabledButtons();
+      const prevButton = new ButtonBuilder()
+        .setCustomId("prev")
+        .setStyle(ButtonStyle.Primary)
+        .setLabel(t("search.prev"))
+        .setDisabled(disabledButtons.prev);
+
+      const nextButton = new ButtonBuilder()
+        .setCustomId("next")
+        .setStyle(ButtonStyle.Primary)
+        .setLabel(t("search.next"))
+        .setDisabled(disabledButtons.next);
+
+      const paginatedArticles = pagination.getPaginatedArticles();
+      const embed = buildSearchResultEmbed({
+        paginatedArticles,
+        query,
+        column,
+      });
+      const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+        prevButton,
+        nextButton
+      );
+
+      return { embeds: [embed], components: [row] };
+    };
+
+    const sent = await interaction.reply(createSearchMessage());
+
+    const collector = sent.createMessageComponentCollector({
+      componentType: ComponentType.Button,
+      time: 10_000,
     });
-    await interaction.reply({ embeds: [embed] });
+
+    collector.on("end", async () => {
+      await interaction.editReply({ components: [] });
+    });
   },
 };
