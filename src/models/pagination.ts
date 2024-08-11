@@ -30,22 +30,36 @@ export class Pagination {
   }
 
   public getPaginatedArticles(): PaginatedArticles {
+    const start = this.page * this.PAGE_ARTICLE_LIMIT;
+    const end = Math.min(
+      (this.page + 1) * this.PAGE_ARTICLE_LIMIT,
+      this.articles.length
+    );
+
     return {
       footer: {
-        start: 0,
-        end: 0,
+        start: start + 1,
+        end,
         max: this.articles.length,
         page: this.page + 1,
         maxPage: this.pageCount,
       },
-      articles: this.articles.slice(0, 5),
+      articles: this.articles.slice(start, end),
     };
   }
 
   public getDisabledButtons(): DisabledButtons {
     return {
       prev: this.page === 0,
-      next: this.page === this.pageCount,
+      next: this.page + 1 === this.pageCount,
     };
+  }
+
+  public goToNextPage() {
+    this.page += 1;
+  }
+
+  public goToPrevPage() {
+    this.page -= 1;
   }
 }

@@ -79,7 +79,15 @@ export const search: Command = {
 
     const collector = sent.createMessageComponentCollector({
       componentType: ComponentType.Button,
-      time: 10_000,
+      filter: (i) => i.user.id === interaction.user.id,
+      time: 60_000,
+    });
+
+    collector.on("collect", async (i) => {
+      if (i.customId === "prev") pagination.goToPrevPage();
+      if (i.customId === "next") pagination.goToNextPage();
+
+      await i.update(createSearchMessage());
     });
 
     collector.on("end", async () => {
