@@ -36,3 +36,5 @@ const postRequest = async () => {
 };
 
 postRequest();
+
+// TODO: Add script to refetch articles

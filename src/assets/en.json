@@ -14,7 +14,8 @@
     "article-query": "Title or flight number/registration to find article by",
     "search": "Search all articles.",
     "search-column": "Column to search in",
-    "search-query": "Query to search for"
+    "search-query": "Query to search for",
+    "refetch": "Refetch all data. Note that changes may take a few minutes to appear."
   },
   "article": {
     "title": "Article Title",
