@@ -1,6 +1,7 @@
 # Admiral Bot
 
 A bot to search through all published articles of [Admiral Cloudberg](https://admiralcloudberg.medium.com/).
+It can be accessed using the [invitation link](https://discord.com/oauth2/authorize?client_id=1270356441533775914&permissions=0&integration_type=0&scope=bot+applications.commands).
 
 ## Scripts
 
