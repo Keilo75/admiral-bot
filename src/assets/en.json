@@ -1,4 +1,5 @@
 {
+  "status": "Controlled Pod Into Terrain",
   "messages": {
     "error": ":x: **|** An unexpected error occured. Please check the logs for details.",
     "pinging": ":timer: **|** Pinging...",

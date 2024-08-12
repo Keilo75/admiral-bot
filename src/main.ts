@@ -1,6 +1,6 @@
 import "./libs/i18n";
 
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { ActivityType, Client, Events, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 import { t } from "i18next";
 
@@ -12,7 +12,17 @@ import { Logger } from "./utils";
 
 dotenv.config();
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds],
+  presence: {
+    activities: [
+      {
+        name: t("status"),
+        type: ActivityType.Listening,
+      },
+    ],
+  },
+});
 const context = new Context();
 const cooldowns = new Cooldowns();
 
