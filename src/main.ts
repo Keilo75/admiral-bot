@@ -7,12 +7,14 @@ import { t } from "i18next";
 import { commands } from "./commands";
 import { fetchArticles } from "./libs/data";
 import { Context } from "./models/context";
+import { Cooldowns } from "./models/cooldowns";
 import { Logger } from "./utils";
 
 dotenv.config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const context = new Context();
+const cooldowns = new Cooldowns();
 
 client.once(Events.ClientReady, (readyClient) => {
   Logger.log(`Logged in as ${readyClient.user.tag}.`);
@@ -30,7 +32,17 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 
   try {
-    await command.execute({ interaction, context });
+    const cooldown = cooldowns.getCooldownState(command);
+    if (cooldown.canExecute) {
+      cooldowns.updateCooldowns(command);
+      await command.execute({ interaction, context });
+    } else {
+      // TODO: Format this to hhmmss
+      await interaction.reply({
+        content: t("messages.cooldown", { duration: cooldown.remainingTime }),
+        ephemeral: true,
+      });
+    }
   } catch (err) {
     Logger.error(`Error while executing ${commandName}.`, err);
 

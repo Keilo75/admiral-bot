@@ -14,6 +14,7 @@ type Args<I> = {
 
 export type Command = {
   data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
+  cooldown?: number;
   execute: (args: Args<ChatInputCommandInteraction>) => Promise<void>;
   autocomplete?: (args: Args<AutocompleteInteraction>) => Promise<void>;
 };
