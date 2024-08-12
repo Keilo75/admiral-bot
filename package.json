@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "test": "vitest",
     "scripts:register-commands:dev": "cross-env MODE=dev ts-node src/scripts/register-commands.ts",
-    "scripts:register-commands:prod": "cross-env MODE=prod ts-node src/scripts/register-commands.ts"
+    "scripts:register-commands:prod": "cross-env MODE=prod ts-node src/scripts/register-commands.ts",
+    "scripts:delete-commands:dev": "cross-env DELETE=TRUE MODE=dev ts-node src/scripts/register-commands.ts",
+    "scripts:delete-commands:prod": "cross-env DELETE=TRUE MODE=prod ts-node src/scripts/register-commands.ts"
   },
   "author": "Keilo75",
   "license": "MIT",

@@ -11,7 +11,9 @@ dotenv.config();
 const mode = process.env.MODE === "dev" ? "dev" : "prod";
 Logger.log(`Registering commands in ${mode} mode.`);
 
-const commandData = Array.from(commands.values()).map((c) => c.data.toJSON());
+const commandData = process.env.DELETE
+  ? []
+  : Array.from(commands.values()).map((c) => c.data.toJSON());
 Logger.debug("Commands", commandData);
 
 const postRequest = async () => {
@@ -36,5 +38,3 @@ const postRequest = async () => {
 };
 
 postRequest();
-
-// TODO: Add script to refetch articles
