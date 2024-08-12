@@ -30,6 +30,10 @@ export class Context {
     this.articles = articles;
   }
 
+  public getArticleCount(): number {
+    return this.articles.length;
+  }
+
   public getRandomArticle(): Article {
     let article: Article;
 
