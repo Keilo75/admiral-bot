@@ -37,7 +37,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
       cooldowns.updateCooldowns(command);
       await command.execute({ interaction, context });
     } else {
-      // TODO: Format this to hhmmss
       await interaction.reply({
         content: t("messages.cooldown", { duration: cooldown.remainingTime }),
         ephemeral: true,

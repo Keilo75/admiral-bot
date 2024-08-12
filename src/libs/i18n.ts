@@ -28,3 +28,12 @@ i18next.services.formatter?.add("list-dots", (values: string[]) => {
 i18next.services.formatter?.add("escape-markdown", (value: string) => {
   return escapeMarkdown(value.replace(/`/g, ""));
 });
+
+i18next.services.formatter?.add("duration", (value: number) => {
+  const [hours, minutes, seconds] = new Date(value)
+    .toISOString()
+    .slice(11, 19)
+    .split(":");
+
+  return `${hours}h ${minutes}m ${seconds}s`;
+});

@@ -5,7 +5,7 @@
     "pinged": ":timer: **|** Current roundtrip latency is {{latency}}ms.",
     "invalid-article-id": ":x: **|** Unable to find article. Please select a value from the list or use the `/search` command.. ",
     "no-results": ":mag_right: **|** No search results found for `{{query, escape-markdown}}` in `{{column}}` column.",
-    "cooldown": ":hourglass_flowing_sand: **|** Please wait {{duration}} before executing this command again.",
+    "cooldown": ":hourglass_flowing_sand: **|** Please wait {{duration, duration}} before executing this command again.",
     "refetching": ":arrows_counterclockwise: **|** Refetching data...",
     "refetched": ":arrows_counterclockwise: **|** Fetched {{new}} articles. Previous count was {{prev}}."
   },
