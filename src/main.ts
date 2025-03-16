@@ -54,14 +54,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
   } catch (err) {
     Logger.error(`Error while executing ${commandName}.`, err);
-
-    const content = t("messages.error");
-
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content });
-    } else {
-      await interaction.reply({ content });
-    }
   }
 });
 
