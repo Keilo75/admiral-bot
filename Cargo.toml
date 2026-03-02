@@ -4,6 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-clap = { version = "4.5.60", features = ["derive"] }
+clap = { version = "4.5.60", features = ["derive", "env"] }
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
+serenity = "0.12.5"
+tokio = { version = "1.49.0", features = ["full"] }
+exn = "0.3.0"
+dotenvy = "0.15.7"
+derive_more = { version = "2", features = ["display"] }

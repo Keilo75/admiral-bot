@@ -1,4 +1,6 @@
 use clap::{Parser, Subcommand};
+use derive_more::Display;
+use exn::{Result, ResultExt};
 use tracing::info;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
@@ -7,6 +9,8 @@ use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitEx
 struct Cli {
     #[command(subcommand)]
     command: Commands,
+    #[arg(long, env)]
+    discord_token: String,
 }
 
 #[derive(Subcommand, Debug)]
@@ -15,7 +19,10 @@ enum Commands {
     RegisterDev { guild_id: String },
 }
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<(), FatalError> {
+    dotenvy::dotenv().or_raise(|| FatalError("failed to load .env file".into()))?;
+
     tracing_subscriber::registry()
         .with(EnvFilter::from_default_env())
         .with(tracing_subscriber::fmt::layer())
@@ -23,4 +30,10 @@ fn main() {
 
     let args = Cli::parse();
     info!("{:?}", args);
+
+    Ok(())
 }
+
+#[derive(Debug, Display)]
+struct FatalError(String);
+impl std::error::Error for FatalError {}
