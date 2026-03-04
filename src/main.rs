@@ -1,26 +1,15 @@
-use clap::{Parser, Subcommand};
+use clap::Parser;
 use derive_more::Display;
 use exn::{Result, ResultExt};
-use serenity::all::{CreateCommand, Http};
+use serenity::{
+    Client,
+    all::{GatewayIntents, Http},
+};
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
+mod cli;
 mod commands;
-use commands::COMMANDS;
-
-#[derive(Parser, Debug)]
-#[command(version, about, long_about = None)]
-struct Cli {
-    #[command(subcommand)]
-    command: Commands,
-    #[arg(long, env)]
-    discord_token: String,
-}
-
-#[derive(Subcommand, Debug)]
-enum Commands {
-    /// Register commands for the provided guild
-    RegisterDev { application_id: u64, guild_id: u64 },
-}
+mod handler;
 
 #[tokio::main]
 async fn main() -> Result<(), FatalError> {
@@ -31,22 +20,32 @@ async fn main() -> Result<(), FatalError> {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    let args = Cli::parse();
+    let args = cli::Args::parse();
 
+    let slash_commands = commands::SlashCommands::new();
     match args.command {
-        Commands::RegisterDev {
+        cli::Commands::RegisterDev {
             application_id,
             guild_id,
         } => {
             let http = Http::new(&args.discord_token);
             http.set_application_id(application_id.into());
 
-            let commands: Vec<CreateCommand> =
-                COMMANDS.iter().map(|command| command.register()).collect();
-
-            http.create_guild_commands(guild_id.into(), &commands)
+            http.create_guild_commands(guild_id.into(), &slash_commands.to_create_commands())
                 .await
                 .or_raise(|| FatalError("failed to create guild commands".into()))?;
+        }
+
+        cli::Commands::Start => {
+            let mut client = Client::builder(&args.discord_token, GatewayIntents::empty())
+                .event_handler(handler::Handler::new(slash_commands))
+                .await
+                .or_raise(|| FatalError("failed to create client".into()))?;
+
+            client
+                .start()
+                .await
+                .or_raise(|| FatalError("failed to start client".into()))?;
         }
     }
 
