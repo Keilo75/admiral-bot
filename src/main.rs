@@ -9,7 +9,9 @@ use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitEx
 
 mod cli;
 mod commands;
+mod config;
 mod handler;
+mod state;
 
 #[tokio::main]
 async fn main() -> Result<(), FatalError> {
@@ -37,8 +39,13 @@ async fn main() -> Result<(), FatalError> {
         }
 
         cli::Commands::Start => {
+            let config = config::Config::try_from_args(&args)
+                .or_raise(|| FatalError("failed to parse config".into()))?;
+
+            let state = state::State { config };
+
             let mut client = Client::builder(&args.discord_token, GatewayIntents::empty())
-                .event_handler(handler::Handler::new(slash_commands))
+                .event_handler(handler::Handler::new(slash_commands, state))
                 .await
                 .or_raise(|| FatalError("failed to create client".into()))?;
 

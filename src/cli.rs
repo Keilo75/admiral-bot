@@ -7,6 +7,8 @@ pub(super) struct Args {
     pub(super) command: Commands,
     #[arg(long, env)]
     pub(super) discord_token: String,
+    #[arg(long, env)]
+    pub(super) embed_color: String,
 }
 
 #[derive(Subcommand, Debug)]

@@ -4,15 +4,22 @@ use serenity::{
 };
 use tracing::info;
 
-use crate::commands::{SlashCommand, SlashCommands, about};
+use crate::{
+    commands::{SlashCommand, SlashCommands, about},
+    state::State,
+};
 
 pub(super) struct Handler {
     slash_commands: SlashCommands,
+    state: State,
 }
 
 impl Handler {
-    pub(super) fn new(slash_commands: SlashCommands) -> Self {
-        Self { slash_commands }
+    pub(super) fn new(slash_commands: SlashCommands, state: State) -> Self {
+        Self {
+            slash_commands,
+            state,
+        }
     }
 
     // TODO: make this fallible
@@ -23,7 +30,7 @@ impl Handler {
         interaction: CommandInteraction,
     ) {
         match command {
-            SlashCommand::About => about::run(ctx, interaction).await,
+            SlashCommand::About => about::run(ctx, interaction, &self.state).await,
         };
     }
 }
