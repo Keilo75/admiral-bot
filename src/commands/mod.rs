@@ -1,3 +1,4 @@
+use rust_i18n::t;
 use serenity::all::CreateCommand;
 use std::collections::HashMap;
 
@@ -15,11 +16,11 @@ impl SlashCommand {
     }
 
     fn to_create_command(&self) -> CreateCommand {
-        let create_command = CreateCommand::new(self.name());
+        let create_command = CreateCommand::new(self.name())
+            .description(t!(format!("command-descriptions.{}", self.name())));
 
         match self {
-            // TODO: use i18n for description(s)
-            SlashCommand::About => create_command.description("Show information about the bot."),
+            SlashCommand::About => create_command,
         }
     }
 }

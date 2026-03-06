@@ -1,6 +1,7 @@
 use clap::Parser;
 use derive_more::Display;
 use exn::{Result, ResultExt};
+use rust_i18n::i18n;
 use serenity::{
     Client,
     all::{GatewayIntents, Http},
@@ -12,6 +13,8 @@ mod commands;
 mod config;
 mod handler;
 mod state;
+
+i18n!("assets/locale", fallback = "en-US");
 
 #[tokio::main]
 async fn main() -> Result<(), FatalError> {

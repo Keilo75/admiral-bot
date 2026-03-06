@@ -1,0 +1,12 @@
+{
+  "command-descriptions": {
+    "about": "Show information about the bot."
+  },
+  "about": {
+    "title": "About",
+    "description": "A bot to search through all published articles of Admiral Cloudberg.",
+    "links": "Links",
+    "links-urls": "[Data Source](https://docs.google.com/spreadsheets/d/1KZ9MQcOUI0ecnYUp_tqPUTSvZvhDRH8K-tcl7HwF3PU/edit?usp=sharing)\n[GitHub](https://github.com/Keilo75/admiral-bot)",
+    "footer": "Made by Keilo75"
+  }
+}

@@ -1,3 +1,4 @@
+use rust_i18n::t;
 use serenity::all::{
     CommandInteraction, Context, CreateEmbed, CreateEmbedFooter, CreateInteractionResponse,
     CreateInteractionResponseMessage,
@@ -6,14 +7,12 @@ use serenity::all::{
 use crate::state::State;
 
 pub async fn run(ctx: Context, interaction: CommandInteraction, state: &State) -> () {
-    let links = "[Data Source](https://docs.google.com/spreadsheets/d/1KZ9MQcOUI0ecnYUp_tqPUTSvZvhDRH8K-tcl7HwF3PU/edit?usp=sharing)\n[GitHub](https://github.com/Keilo75/admiral-bot)";
-
-    let footer = CreateEmbedFooter::new("Made by Keilo75");
+    let footer = CreateEmbedFooter::new(t!("about.footer"));
     let embed = CreateEmbed::new()
-        .title("About")
-        .description("This is a description")
+        .title(t!("about.title"))
+        .description(t!("about.description"))
         .color(state.config.embed_color)
-        .field("Links", links, false)
+        .field(t!("about.links"), t!("about.links-urls"), false)
         .footer(footer);
 
     interaction
