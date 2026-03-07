@@ -12,8 +12,6 @@ pub async fn run(
     interaction: &CommandInteraction,
     state: &State,
 ) -> Result<(), SlashCommandError> {
-    std::fs::File::open("fsaf").or_raise(|| SlashCommandError::new("failed to open file"))?;
-
     let footer = CreateEmbedFooter::new(t!("about.footer"));
     let embed = CreateEmbed::new()
         .title(t!("about.title"))

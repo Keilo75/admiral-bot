@@ -9,7 +9,7 @@ pub(super) enum SlashCommand {
 }
 
 impl SlashCommand {
-    fn name(&self) -> &str {
+    pub(super) fn name(&self) -> &str {
         match self {
             &SlashCommand::About => "about",
         }

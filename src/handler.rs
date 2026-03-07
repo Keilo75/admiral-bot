@@ -2,12 +2,21 @@ use crate::{
     commands::{SlashCommand, SlashCommands, about},
     state::State,
 };
+use derive_more::Display;
+use exn::ResultExt;
 use rust_i18n::t;
 use serenity::{
     all::{CommandInteraction, Context, EventHandler, Interaction, Ready},
     async_trait,
 };
 use tracing::info;
+
+#[derive(Debug, Display)]
+#[display("failed to run slash command '{command_name}'")]
+struct RunSlashCommandError {
+    command_name: String,
+}
+impl std::error::Error for RunSlashCommandError {}
 
 pub(super) struct Handler {
     slash_commands: SlashCommands,
@@ -30,7 +39,10 @@ impl Handler {
     ) {
         let result = match command {
             SlashCommand::About => about::run(&ctx, &interaction, &self.state).await,
-        };
+        }
+        .or_raise(|| RunSlashCommandError {
+            command_name: command.name().to_string(),
+        });
 
         if let Err(err) = result {
             self.state.logger.error(&ctx.http, err).await;
