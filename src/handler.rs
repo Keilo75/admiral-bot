@@ -1,13 +1,13 @@
+use crate::{
+    commands::{SlashCommand, SlashCommands, about},
+    state::State,
+};
+use rust_i18n::t;
 use serenity::{
     all::{CommandInteraction, Context, EventHandler, Interaction, Ready},
     async_trait,
 };
 use tracing::info;
-
-use crate::{
-    commands::{SlashCommand, SlashCommands, about},
-    state::State,
-};
 
 pub(super) struct Handler {
     slash_commands: SlashCommands,
@@ -45,7 +45,12 @@ impl EventHandler for Handler {
         }
     }
 
-    async fn ready(&self, _: Context, ready: Ready) {
-        info!("Logged in as '{}'.", ready.user.name);
+    async fn ready(&self, ctx: Context, ready: Ready) {
+        info!("Logged in as {}", &ready.user.name);
+
+        self.state
+            .logger
+            .info(&ctx.http, t!("logs.logged-in", username = ready.user.name))
+            .await;
     }
 }

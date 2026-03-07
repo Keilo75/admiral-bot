@@ -9,6 +9,10 @@ pub(super) struct Args {
     pub(super) discord_token: String,
     #[arg(long, env)]
     pub(super) embed_color: String,
+    #[arg(long, env)]
+    pub(super) log_channel_id: u64,
+    #[arg(long, env)]
+    pub(super) log_user_id: u64,
 }
 
 #[derive(Subcommand, Debug)]

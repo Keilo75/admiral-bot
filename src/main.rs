@@ -10,7 +10,6 @@ use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitEx
 
 mod cli;
 mod commands;
-mod config;
 mod handler;
 mod state;
 
@@ -42,10 +41,10 @@ async fn main() -> Result<(), FatalError> {
         }
 
         cli::Commands::Start => {
-            let config = config::Config::try_from_args(&args)
+            let config = state::Config::try_from_args(&args)
                 .or_raise(|| FatalError("failed to parse config".into()))?;
 
-            let state = state::State { config };
+            let state = state::State::new(config);
 
             let mut client = Client::builder(&args.discord_token, GatewayIntents::empty())
                 .event_handler(handler::Handler::new(slash_commands, state))

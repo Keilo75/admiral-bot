@@ -1,25 +1,31 @@
 use derive_more::Display;
-use serenity::all::Color;
+use serenity::all::{ChannelId, Color, UserId};
 
 use crate::cli::Args;
 
-pub(super) struct Config {
-    pub(super) embed_color: Color,
+pub struct Config {
+    pub embed_color: Color,
+    pub log_channel_id: ChannelId,
+    pub log_user_id: UserId,
 }
 
 #[derive(Debug, Display)]
-pub(super) enum ConfigError {
+pub enum ConfigError {
     #[display("embed color must be of format '#rrggbb'")]
     EmbedColor,
 }
 impl std::error::Error for ConfigError {}
 
 impl Config {
-    pub(super) fn try_from_args(args: &Args) -> Result<Self, ConfigError> {
+    pub fn try_from_args(args: &Args) -> Result<Self, ConfigError> {
         let embed_color =
             Self::parse_embed_color(&args.embed_color).ok_or(ConfigError::EmbedColor)?;
 
-        Ok(Self { embed_color })
+        Ok(Self {
+            embed_color,
+            log_channel_id: args.log_channel_id.into(),
+            log_user_id: args.log_user_id.into(),
+        })
     }
 
     fn parse_embed_color(embed_color: &str) -> Option<Color> {

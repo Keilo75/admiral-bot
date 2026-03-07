@@ -8,5 +8,8 @@
     "links": "Links",
     "links-urls": "[Data Source](https://docs.google.com/spreadsheets/d/1KZ9MQcOUI0ecnYUp_tqPUTSvZvhDRH8K-tcl7HwF3PU/edit?usp=sharing)\n[GitHub](https://github.com/Keilo75/admiral-bot)",
     "footer": "Made by Keilo75"
+  },
+  "logs": {
+    "logged-in": ":blue_square: Logged in as `%{username}`."
   }
 }
