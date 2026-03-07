@@ -10,6 +10,8 @@
     "footer": "Made by Keilo75"
   },
   "logs": {
-    "logged-in": ":blue_square: Logged in as `%{username}`."
+    "info": ":blue_square: %{message}",
+    "error": ":red_square: <@%{user_id}>, an error occured: \n```%{error}```",
+    "logged-in": "Logged in as `%{username}`."
   }
 }

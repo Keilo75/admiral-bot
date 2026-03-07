@@ -22,16 +22,19 @@ impl Handler {
         }
     }
 
-    // TODO: make this fallible
     async fn run_slash_command(
         &self,
         command: &SlashCommand,
         ctx: Context,
         interaction: CommandInteraction,
     ) {
-        match command {
-            SlashCommand::About => about::run(ctx, interaction, &self.state).await,
+        let result = match command {
+            SlashCommand::About => about::run(&ctx, &interaction, &self.state).await,
         };
+
+        if let Err(err) = result {
+            self.state.logger.error(&ctx.http, err).await;
+        }
     }
 }
 

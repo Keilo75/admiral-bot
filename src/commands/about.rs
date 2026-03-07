@@ -1,12 +1,19 @@
+use exn::{Result, ResultExt};
 use rust_i18n::t;
 use serenity::all::{
     CommandInteraction, Context, CreateEmbed, CreateEmbedFooter, CreateInteractionResponse,
     CreateInteractionResponseMessage,
 };
 
-use crate::state::State;
+use crate::{error::SlashCommandError, state::State};
 
-pub async fn run(ctx: Context, interaction: CommandInteraction, state: &State) -> () {
+pub async fn run(
+    ctx: &Context,
+    interaction: &CommandInteraction,
+    state: &State,
+) -> Result<(), SlashCommandError> {
+    std::fs::File::open("fsaf").or_raise(|| SlashCommandError::new("failed to open file"))?;
+
     let footer = CreateEmbedFooter::new(t!("about.footer"));
     let embed = CreateEmbed::new()
         .title(t!("about.title"))
@@ -23,5 +30,7 @@ pub async fn run(ctx: Context, interaction: CommandInteraction, state: &State) -
             ),
         )
         .await
-        .unwrap();
+        .or_raise(|| SlashCommandError::new("failed to create interaction response"))?;
+
+    Ok(())
 }
