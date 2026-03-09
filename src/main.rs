@@ -15,6 +15,7 @@ mod cli;
 mod commands;
 mod error;
 mod handler;
+mod repositories;
 mod state;
 
 i18n!("assets/locale", fallback = "en-US");
@@ -64,7 +65,12 @@ async fn main() -> Result<(), FatalError> {
             let config = state::Config::try_from_args(&args)
                 .or_raise(|| FatalError("failed to parse config".into()))?;
 
-            let state = state::State::new(config);
+            let articles_repository =
+                repositories::ArticlesRepository::initialize(args.articles_csv_url.clone())
+                    .await
+                    .or_raise(|| FatalError("failed to initialize articles repository".into()))?;
+
+            let state = state::State::new(config, articles_repository);
 
             let mut client = Client::builder(&args.discord_token, GatewayIntents::empty())
                 .event_handler(handler::Handler::new(slash_commands, state))
@@ -75,6 +81,8 @@ async fn main() -> Result<(), FatalError> {
                 .start()
                 .await
                 .or_raise(|| FatalError("failed to start client".into()))?;
+
+            // TODO: periodically refetch articles
         }
     }
 

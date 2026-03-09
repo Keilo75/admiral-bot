@@ -15,6 +15,8 @@ pub(super) struct Args {
     pub(super) log_user_id: u64,
     #[arg(long, env)]
     pub(super) database_url: String,
+    #[arg(long, env)]
+    pub(super) articles_csv_url: String,
 }
 
 #[derive(Subcommand, Debug)]
