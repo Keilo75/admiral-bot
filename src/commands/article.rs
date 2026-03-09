@@ -28,10 +28,12 @@ pub async fn autocomplete(
         bail!(SlashCommandError::new("received unexpected options"))
     };
 
+    let query = value.trim().to_lowercase();
+
     // TODO: construct name dynamically
     let choices = state
         .articles_repository
-        .get_by_title_or_identifier(value)
+        .get_by_title_or_identifier(&query)
         .into_iter()
         .map(|article| AutocompleteChoice::new(&article.title, article.id.to_string()))
         .collect();
