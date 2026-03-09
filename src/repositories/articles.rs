@@ -118,6 +118,10 @@ impl ArticlesRepository {
     }
 
     pub fn get_by_title_or_identifier(&self, title_or_identifier: &str) -> Vec<Arc<Article>> {
+        if title_or_identifier.is_empty() {
+            return Vec::new();
+        }
+
         const ARTICLE_LIMIT: usize = 10;
 
         let articles = self.articles.load();

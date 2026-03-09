@@ -1,10 +1,11 @@
 use exn::{Result, ResultExt, bail};
+use rust_i18n::t;
 use serenity::all::{
     AutocompleteChoice, CommandInteraction, CommandOptionType, Context, CreateAutocompleteResponse,
     CreateInteractionResponse, ResolvedValue,
 };
 
-use crate::{error::SlashCommandError, state::State};
+use crate::{error::SlashCommandError, i18n, state::State};
 
 pub async fn run(
     ctx: &Context,
@@ -30,12 +31,17 @@ pub async fn autocomplete(
 
     let query = value.trim().to_lowercase();
 
-    // TODO: construct name dynamically
     let choices = state
         .articles_repository
         .get_by_title_or_identifier(&query)
         .into_iter()
-        .map(|article| AutocompleteChoice::new(&article.title, article.id.to_string()))
+        .map(|article| {
+            let title = &article.title;
+            let identifiers = i18n::format_short_list(&article.identifiers);
+            let name = t!("article.option", title = title, identifiers = identifiers);
+
+            AutocompleteChoice::new(name, article.id.to_string())
+        })
         .collect();
 
     interaction

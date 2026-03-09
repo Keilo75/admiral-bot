@@ -15,6 +15,7 @@ mod cli;
 mod commands;
 mod error;
 mod handler;
+mod i18n;
 mod repositories;
 mod state;
 
