@@ -1,5 +1,5 @@
 use crate::{
-    commands::{SlashCommand, SlashCommands, about},
+    commands::{SlashCommand, SlashCommands, about, article},
     state::State,
 };
 use derive_more::Display;
@@ -39,6 +39,7 @@ impl Handler {
     ) {
         let result = match command {
             SlashCommand::About => about::run(&ctx, &interaction, &self.state).await,
+            SlashCommand::Article => article::run(&ctx, &interaction, &self.state).await,
         }
         .or_raise(|| RunSlashCommandError {
             command_name: command.name().to_string(),

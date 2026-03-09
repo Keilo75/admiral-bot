@@ -1,6 +1,7 @@
 {
   "command-descriptions": {
-    "about": "Show information about the bot."
+    "about": "Show information about the bot.",
+    "article": "Find a single article."
   },
   "about": {
     "title": "About",
@@ -8,6 +9,10 @@
     "links": "Links",
     "links-urls": "[Data Source](https://docs.google.com/spreadsheets/d/1KZ9MQcOUI0ecnYUp_tqPUTSvZvhDRH8K-tcl7HwF3PU/edit?usp=sharing)\n[GitHub](https://github.com/Keilo75/admiral-bot)",
     "footer": "Made by Keilo75"
+  },
+  "article": {
+    "query": "query",
+    "query-description": "Title or flight number/registration to find article by"
   },
   "logs": {
     "info": ":blue_square: %{message}",

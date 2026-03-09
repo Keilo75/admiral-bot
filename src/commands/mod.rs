@@ -1,17 +1,21 @@
 use rust_i18n::t;
-use serenity::all::CreateCommand;
+use serenity::all::{CommandOptionType, CreateCommand, CreateCommandOption};
 use std::collections::HashMap;
 
 pub(super) mod about;
+pub(super) mod article;
 
+#[derive(Copy, Clone)]
 pub(super) enum SlashCommand {
     About,
+    Article,
 }
 
 impl SlashCommand {
     pub(super) fn name(&self) -> &str {
         match self {
-            &SlashCommand::About => "about",
+            SlashCommand::About => "about",
+            SlashCommand::Article => "article",
         }
     }
 
@@ -21,6 +25,16 @@ impl SlashCommand {
 
         match self {
             SlashCommand::About => create_command,
+            SlashCommand::Article => create_command.add_option(
+                CreateCommandOption::new(
+                    CommandOptionType::String,
+                    t!("article.query"),
+                    t!("article.query-description"),
+                )
+                .required(true)
+                .max_length(100)
+                .set_autocomplete(true),
+            ),
         }
     }
 }
@@ -31,7 +45,7 @@ pub(super) struct SlashCommands {
 
 impl SlashCommands {
     pub(super) fn new() -> Self {
-        let commands = vec![SlashCommand::About]
+        let commands = vec![SlashCommand::About, SlashCommand::Article]
             .into_iter()
             .map(|command| (command.name().to_string(), command))
             .collect();
