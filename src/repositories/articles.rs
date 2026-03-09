@@ -75,7 +75,7 @@ impl std::error::Error for ArticlesRepositoryError {}
 pub struct ArticlesRepository {
     client: Client,
     articles_csv_url: String,
-    articles: ArcSwap<Vec<Article>>,
+    articles: ArcSwap<Vec<Arc<Article>>>,
 }
 
 impl ArticlesRepository {
@@ -109,11 +109,34 @@ impl ArticlesRepository {
         for result in reader.deserialize() {
             let article: ArticleDTO = result
                 .or_raise(|| ArticlesRepositoryError("failed to deserialize csv entry".into()))?;
-            articles.push(article.into());
+            articles.push(Arc::new(article.into()));
         }
 
         self.articles.store(Arc::new(articles));
 
         Ok(())
+    }
+
+    pub fn get_by_title_or_identifier(&self, title_or_identifier: &str) -> Vec<Arc<Article>> {
+        const ARTICLE_LIMIT: usize = 10;
+
+        let articles = self.articles.load();
+
+        articles
+            .iter()
+            .filter(|article| {
+                let does_title_match = article.title.to_lowercase().contains(&title_or_identifier);
+                if does_title_match {
+                    true
+                } else {
+                    article
+                        .identifiers
+                        .iter()
+                        .any(|identifier| identifier.to_lowercase().contains(&title_or_identifier))
+                }
+            })
+            .take(ARTICLE_LIMIT)
+            .cloned()
+            .collect()
     }
 }

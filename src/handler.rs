@@ -1,22 +1,20 @@
 use crate::{
     commands::{SlashCommand, SlashCommands, about, article},
+    error::SlashCommandError,
     state::State,
 };
 use derive_more::Display;
-use exn::ResultExt;
+use exn::{Exn, ResultExt};
 use rust_i18n::t;
 use serenity::{
-    all::{CommandInteraction, Context, EventHandler, Interaction, Ready},
+    all::{Context, EventHandler, Interaction, Ready},
     async_trait,
 };
 use tracing::info;
 
 #[derive(Debug, Display)]
-#[display("failed to run slash command '{command_name}'")]
-struct RunSlashCommandError {
-    command_name: String,
-}
-impl std::error::Error for RunSlashCommandError {}
+struct InteractionError(String);
+impl std::error::Error for InteractionError {}
 
 pub(super) struct Handler {
     slash_commands: SlashCommands,
@@ -30,34 +28,51 @@ impl Handler {
             state,
         }
     }
-
-    async fn run_slash_command(
-        &self,
-        command: &SlashCommand,
-        ctx: Context,
-        interaction: CommandInteraction,
-    ) {
-        let result = match command {
-            SlashCommand::About => about::run(&ctx, &interaction, &self.state).await,
-            SlashCommand::Article => article::run(&ctx, &interaction, &self.state).await,
-        }
-        .or_raise(|| RunSlashCommandError {
-            command_name: command.name().to_string(),
-        });
-
-        if let Err(err) = result {
-            self.state.logger.error(&ctx.http, err).await;
-        }
-    }
 }
 
 #[async_trait]
 impl EventHandler for Handler {
     async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
-        if let Interaction::Command(interaction) = interaction
-            && let Some(command) = self.slash_commands.get(&interaction.data.name)
-        {
-            self.run_slash_command(command, ctx, interaction).await;
+        let result = match interaction {
+            Interaction::Command(interaction) => match self
+                .slash_commands
+                .get(&interaction.data.name)
+            {
+                Some(SlashCommand::About) => about::run(&ctx, &interaction, &self.state).await,
+                Some(SlashCommand::Article) => article::run(&ctx, &interaction, &self.state).await,
+                None => Err(Exn::new(SlashCommandError::new(
+                    "received unknown slash command",
+                ))),
+            }
+            .or_raise(|| {
+                InteractionError(format!(
+                    "failed to run slash command '{}'",
+                    &interaction.data.name
+                ))
+            }),
+            Interaction::Autocomplete(interaction) => {
+                match self.slash_commands.get(&interaction.data.name) {
+                    Some(SlashCommand::Article) => {
+                        article::autocomplete(&ctx, &interaction, &self.state).await
+                    }
+                    None | Some(SlashCommand::About) => Err(Exn::new(SlashCommandError::new(
+                        "received unknown autocomplete",
+                    ))),
+                }
+                .or_raise(|| {
+                    InteractionError(format!(
+                        "failed to run autocomplete '{}'",
+                        &interaction.data.name
+                    ))
+                })
+            }
+            _ => Err(Exn::new(InteractionError(
+                "received unexpected interaction".into(),
+            ))),
+        };
+
+        if let Err(err) = result {
+            self.state.logger.error(&ctx.http, err).await;
         }
     }
 

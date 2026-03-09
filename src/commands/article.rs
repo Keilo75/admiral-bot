@@ -1,8 +1,7 @@
-use exn::{Result, ResultExt};
-use rust_i18n::t;
+use exn::{Result, ResultExt, bail};
 use serenity::all::{
-    CommandInteraction, Context, CreateEmbed, CreateEmbedFooter, CreateInteractionResponse,
-    CreateInteractionResponseMessage,
+    AutocompleteChoice, CommandInteraction, CommandOptionType, Context, CreateAutocompleteResponse,
+    CreateInteractionResponse, ResolvedValue,
 };
 
 use crate::{error::SlashCommandError, state::State};
@@ -12,5 +11,40 @@ pub async fn run(
     interaction: &CommandInteraction,
     state: &State,
 ) -> Result<(), SlashCommandError> {
+    Ok(())
+}
+
+pub async fn autocomplete(
+    ctx: &Context,
+    interaction: &CommandInteraction,
+    state: &State,
+) -> Result<(), SlashCommandError> {
+    let options = interaction.data.options();
+    let Some(ResolvedValue::Autocomplete {
+        kind: CommandOptionType::String,
+        value,
+    }) = options.first().map(|option| &option.value)
+    else {
+        bail!(SlashCommandError::new("received unexpected options"))
+    };
+
+    // TODO: construct name dynamically
+    let choices = state
+        .articles_repository
+        .get_by_title_or_identifier(value)
+        .into_iter()
+        .map(|article| AutocompleteChoice::new(&article.title, article.id.to_string()))
+        .collect();
+
+    interaction
+        .create_response(
+            &ctx.http,
+            CreateInteractionResponse::Autocomplete(
+                CreateAutocompleteResponse::new().set_choices(choices),
+            ),
+        )
+        .await
+        .or_raise(|| SlashCommandError::new("failed to create interaction response"))?;
+
     Ok(())
 }

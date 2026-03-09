@@ -60,7 +60,7 @@ impl SlashCommands {
             .collect()
     }
 
-    pub(super) fn get(&self, name: &str) -> Option<&SlashCommand> {
-        self.commands.get(name)
+    pub(super) fn get(&self, name: &str) -> Option<SlashCommand> {
+        self.commands.get(name).copied()
     }
 }
