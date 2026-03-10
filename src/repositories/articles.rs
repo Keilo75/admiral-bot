@@ -5,6 +5,7 @@ use exn::{Result, ResultExt};
 use reqwest::Client;
 use serde::Deserialize;
 use std::{
+    collections::HashMap,
     hash::{DefaultHasher, Hash, Hasher},
     sync::Arc,
 };
@@ -33,7 +34,7 @@ struct ArticleDTO {
 
 #[derive(Debug)]
 pub struct Article {
-    pub id: u64,
+    pub id: String,
     pub title: String,
     pub release_date: String,
     pub reddit: String,
@@ -49,7 +50,7 @@ impl From<ArticleDTO> for Article {
     fn from(dto: ArticleDTO) -> Self {
         let mut id = DefaultHasher::new();
         dto.title.hash(&mut id);
-        let id = id.finish();
+        let id = id.finish().to_string();
 
         let split_at_slash = |value: String| value.split("/").map(ToString::to_string).collect();
 
@@ -75,7 +76,7 @@ impl std::error::Error for ArticlesRepositoryError {}
 pub struct ArticlesRepository {
     client: Client,
     articles_csv_url: String,
-    articles: ArcSwap<Vec<Arc<Article>>>,
+    articles: ArcSwap<HashMap<String, Arc<Article>>>,
 }
 
 impl ArticlesRepository {
@@ -84,7 +85,7 @@ impl ArticlesRepository {
         let repository = Self {
             articles_csv_url,
             client,
-            articles: ArcSwap::from_pointee(Vec::new()),
+            articles: ArcSwap::from_pointee(HashMap::new()),
         };
 
         repository.update_from_csv().await?;
@@ -103,18 +104,25 @@ impl ArticlesRepository {
             .await
             .or_raise(|| ArticlesRepositoryError("failed to get http response text".into()))?;
 
-        let mut articles = Vec::new();
+        let mut articles = HashMap::new();
 
         let mut reader = Reader::from_reader(response_text.as_bytes());
         for result in reader.deserialize() {
             let article: ArticleDTO = result
                 .or_raise(|| ArticlesRepositoryError("failed to deserialize csv entry".into()))?;
-            articles.push(Arc::new(article.into()));
+
+            let article: Article = article.into();
+            articles.insert(article.id.clone(), Arc::new(article));
         }
 
         self.articles.store(Arc::new(articles));
 
         Ok(())
+    }
+
+    pub fn get_by_id(&self, id: &str) -> Option<Arc<Article>> {
+        let articles = self.articles.load();
+        articles.get(id).cloned()
     }
 
     pub fn get_by_title_or_identifier(&self, title_or_identifier: &str) -> Vec<Arc<Article>> {
@@ -127,7 +135,7 @@ impl ArticlesRepository {
         let articles = self.articles.load();
 
         articles
-            .iter()
+            .values()
             .filter(|article| {
                 let does_title_match = article.title.to_lowercase().contains(&title_or_identifier);
                 if does_title_match {
