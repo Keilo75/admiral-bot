@@ -1,31 +1,27 @@
-use exn::{Result, ResultExt};
-use rust_i18n::t;
+use exn::{OptionExt, Result, ResultExt};
 use serenity::all::{
-    CommandInteraction, Context, CreateEmbed, CreateEmbedFooter, CreateInteractionResponse,
-    CreateInteractionResponseMessage,
+    CommandInteraction, Context, CreateInteractionResponse, CreateInteractionResponseMessage,
 };
 
-use crate::{error::SlashCommandError, state::State};
+use crate::{embeds, error::SlashCommandError, state::State};
 
 pub async fn run(
     ctx: &Context,
     interaction: &CommandInteraction,
     state: &State,
 ) -> Result<(), SlashCommandError> {
-    let footer = CreateEmbedFooter::new(t!("about.footer"));
-    let embed = CreateEmbed::new()
-        .title(t!("about.title"))
-        .description(t!("about.description"))
-        .color(state.config.embed_color)
-        .field(t!("about.links"), t!("about.links-urls"), false)
-        .footer(footer);
+    let random_article = state
+        .articles_repository
+        .get_random()
+        .await
+        .ok_or_raise(|| SlashCommandError::new("failed to get random article"))?;
 
     interaction
         .create_response(
             &ctx.http,
-            CreateInteractionResponse::Message(
-                CreateInteractionResponseMessage::new().embed(embed),
-            ),
+            CreateInteractionResponse::Message(CreateInteractionResponseMessage::new().embed(
+                embeds::create_article_embed(random_article.as_ref(), state.config.embed_color),
+            )),
         )
         .await
         .or_raise(|| SlashCommandError::new("failed to create interaction response"))?;

@@ -2,10 +2,10 @@ use exn::{Result, ResultExt, bail};
 use rust_i18n::t;
 use serenity::all::{
     AutocompleteChoice, CommandInteraction, CommandOptionType, Context, CreateAutocompleteResponse,
-    CreateEmbed, CreateInteractionResponse, CreateInteractionResponseMessage, ResolvedValue,
+    CreateInteractionResponse, CreateInteractionResponseMessage, ResolvedValue,
 };
 
-use crate::{error::SlashCommandError, i18n, state::State};
+use crate::{embeds, error::SlashCommandError, i18n, state::State};
 
 pub async fn run(
     ctx: &Context,
@@ -21,47 +21,9 @@ pub async fn run(
     let article = state.articles_repository.get_by_id(article_id);
 
     let message = match article {
-        Some(article) => {
-            let date = if article.dates.len() > 1 {
-                t!("article.accident-dates")
-            } else {
-                t!("article.accident-date")
-            };
-
-            let location = if article.locations.len() > 1 {
-                t!("article.locations")
-            } else {
-                t!("article.location")
-            };
-
-            let embed = CreateEmbed::new()
-                .title(&article.title)
-                .description(i18n::format_long_list(&article.identifiers))
-                .color(state.config.embed_color)
-                .field(t!("article.accident-type"), &article.accident_type, true)
-                .field(date, i18n::format_short_list(&article.dates), true)
-                .field("\u{200b}", "\u{200b}", true)
-                .field(
-                    t!("article.aircraft"),
-                    i18n::format_short_list(&article.aircraft),
-                    true,
-                )
-                .field(location, i18n::format_short_list(&article.locations), true)
-                .field("\u{200b}", "\u{200b}", true)
-                .field(
-                    t!("article.links"),
-                    t!(
-                        "article.links-urls",
-                        reddit = article.reddit,
-                        medium = article.medium
-                    ),
-                    true,
-                )
-                .field(t!("article.release-date"), &article.release_date, true)
-                .field("\u{200b}", "\u{200b}", true);
-
-            CreateInteractionResponseMessage::new().embed(embed)
-        }
+        Some(article) => CreateInteractionResponseMessage::new().embed(
+            embeds::create_article_embed(article.as_ref(), state.config.embed_color),
+        ),
         // TODO: Include query in output, markdown-escape it beforehand.
         None => CreateInteractionResponseMessage::new()
             .content(t!("article.not-found"))

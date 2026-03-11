@@ -13,6 +13,7 @@ use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitEx
 
 mod cli;
 mod commands;
+mod embeds;
 mod error;
 mod handler;
 mod i18n;

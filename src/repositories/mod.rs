@@ -1,2 +1,2 @@
 mod articles;
-pub(super) use articles::ArticlesRepository;
+pub(super) use articles::{Article, ArticlesRepository};

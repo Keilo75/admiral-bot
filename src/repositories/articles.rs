@@ -2,6 +2,7 @@ use arc_swap::ArcSwap;
 use csv::Reader;
 use derive_more::Display;
 use exn::{Result, ResultExt};
+use rand::{rngs::StdRng, seq::SliceRandom};
 use reqwest::Client;
 use serde::Deserialize;
 use std::{
@@ -9,6 +10,7 @@ use std::{
     hash::{DefaultHasher, Hash, Hasher},
     sync::Arc,
 };
+use tokio::sync::RwLock;
 
 #[derive(Debug, Deserialize)]
 struct ArticleDTO {
@@ -77,15 +79,19 @@ pub struct ArticlesRepository {
     client: Client,
     articles_csv_url: String,
     articles: ArcSwap<HashMap<String, Arc<Article>>>,
+    random_article_ids: RwLock<Vec<String>>,
+    last_random_article_id: ArcSwap<Option<String>>,
 }
 
 impl ArticlesRepository {
     pub async fn initialize(articles_csv_url: String) -> Result<Self, ArticlesRepositoryError> {
         let client = Client::new();
         let repository = Self {
-            articles_csv_url,
             client,
+            articles_csv_url,
             articles: ArcSwap::from_pointee(HashMap::new()),
+            random_article_ids: RwLock::new(Vec::new()),
+            last_random_article_id: ArcSwap::from_pointee(None),
         };
 
         repository.update_from_csv().await?;
@@ -116,6 +122,7 @@ impl ArticlesRepository {
         }
 
         self.articles.store(Arc::new(articles));
+        self.shuffle_random_article_ids().await;
 
         Ok(())
     }
@@ -150,5 +157,46 @@ impl ArticlesRepository {
             .take(ARTICLE_LIMIT)
             .cloned()
             .collect()
+    }
+
+    pub async fn get_random(&self) -> Option<Arc<Article>> {
+        loop {
+            if let Some(article_id) = {
+                let mut ids = self.random_article_ids.write().await;
+                ids.pop()
+            } {
+                let articles = self.articles.load();
+                let article = articles.get(&article_id).cloned()?;
+
+                self.last_random_article_id
+                    .store(Arc::new(Some(article_id)));
+                return Some(article);
+            }
+
+            self.shuffle_random_article_ids().await;
+        }
+    }
+
+    async fn shuffle_random_article_ids(&self) {
+        let mut rng: StdRng = rand::make_rng();
+
+        let articles = self.articles.load();
+        let mut article_ids = articles.keys().cloned().collect::<Vec<_>>();
+
+        let last_article_id = self.last_random_article_id.load();
+
+        article_ids.shuffle(&mut rng);
+        if let Some(last_article_id) = last_article_id.as_ref()
+            && article_ids.len() > 1
+            && article_ids
+                .last()
+                .is_some_and(|article_id| article_id == last_article_id)
+        {
+            let last_index = article_ids.len() - 1;
+            article_ids.swap(0, last_index);
+        }
+
+        let mut random_article_ids = self.random_article_ids.write().await;
+        *random_article_ids = article_ids;
     }
 }
