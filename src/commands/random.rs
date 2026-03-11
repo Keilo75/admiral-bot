@@ -1,6 +1,8 @@
 use exn::{OptionExt, Result, ResultExt};
+use rust_i18n::t;
 use serenity::all::{
-    CommandInteraction, Context, CreateInteractionResponse, CreateInteractionResponseMessage,
+    ActivityData, CommandInteraction, Context, CreateInteractionResponse,
+    CreateInteractionResponseMessage,
 };
 
 use crate::{embeds, error::SlashCommandError, state::State};
@@ -25,6 +27,9 @@ pub async fn run(
         )
         .await
         .or_raise(|| SlashCommandError::new("failed to create interaction response"))?;
+
+    let activity = ActivityData::custom(t!("random.status", title = random_article.title));
+    ctx.set_activity(Some(activity));
 
     Ok(())
 }

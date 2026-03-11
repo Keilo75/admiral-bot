@@ -26,6 +26,9 @@
     "links-urls": "[Reddit](%{reddit})\n[Medium](%{medium})",
     "release-date": "Release Date"
   },
+  "random": {
+    "status": "Reading '%{title}'"
+  },
   "logs": {
     "info": ":blue_square: %{message}",
     "error": ":red_square: <@%{user_id}>, an error occured: \n```%{error}```",

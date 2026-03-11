@@ -84,5 +84,7 @@ impl EventHandler for Handler {
             .logger
             .info(&ctx.http, t!("logs.logged-in", username = ready.user.name))
             .await;
+
+        ctx.set_activity(None);
     }
 }
