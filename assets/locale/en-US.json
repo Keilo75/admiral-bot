@@ -1,7 +1,8 @@
 {
   "command-descriptions": {
     "about": "Show information about the bot.",
-    "article": "Find a single article."
+    "article": "Find a single article.",
+    "random": "Get a random article."
   },
   "about": {
     "title": "About",

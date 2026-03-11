@@ -1,5 +1,5 @@
 use crate::{
-    commands::{SlashCommand, SlashCommands, about, article},
+    commands::{SlashCommand, SlashCommands, about, article, random},
     error::SlashCommandError,
     state::State,
 };
@@ -40,6 +40,7 @@ impl EventHandler for Handler {
             {
                 Some(SlashCommand::About) => about::run(&ctx, &interaction, &self.state).await,
                 Some(SlashCommand::Article) => article::run(&ctx, &interaction, &self.state).await,
+                Some(SlashCommand::Random) => random::run(&ctx, &interaction, &self.state).await,
                 None => Err(Exn::new(SlashCommandError::new(
                     "received unknown slash command",
                 ))),
@@ -55,9 +56,9 @@ impl EventHandler for Handler {
                     Some(SlashCommand::Article) => {
                         article::autocomplete(&ctx, &interaction, &self.state).await
                     }
-                    None | Some(SlashCommand::About) => Err(Exn::new(SlashCommandError::new(
-                        "received unknown autocomplete",
-                    ))),
+                    None | Some(SlashCommand::About | SlashCommand::Random) => Err(Exn::new(
+                        SlashCommandError::new("received unknown autocomplete"),
+                    )),
                 }
                 .or_raise(|| {
                     InteractionError(format!(

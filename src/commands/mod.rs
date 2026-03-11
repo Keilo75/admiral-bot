@@ -4,18 +4,21 @@ use std::collections::HashMap;
 
 pub(super) mod about;
 pub(super) mod article;
+pub(super) mod random;
 
 #[derive(Copy, Clone)]
 pub(super) enum SlashCommand {
     About,
     Article,
+    Random,
 }
 
 impl SlashCommand {
     pub(super) fn name(&self) -> &str {
         match self {
-            SlashCommand::About => "about",
-            SlashCommand::Article => "article",
+            Self::About => "about",
+            Self::Article => "article",
+            Self::Random => "random",
         }
     }
 
@@ -24,8 +27,8 @@ impl SlashCommand {
             .description(t!(format!("command-descriptions.{}", self.name())));
 
         match self {
-            SlashCommand::About => create_command,
-            SlashCommand::Article => create_command.add_option(
+            Self::About => create_command,
+            Self::Article => create_command.add_option(
                 CreateCommandOption::new(
                     CommandOptionType::String,
                     t!("article.query"),
@@ -35,6 +38,7 @@ impl SlashCommand {
                 .max_length(100)
                 .set_autocomplete(true),
             ),
+            Self::Random => create_command,
         }
     }
 }
@@ -45,10 +49,14 @@ pub(super) struct SlashCommands {
 
 impl SlashCommands {
     pub(super) fn new() -> Self {
-        let commands = vec![SlashCommand::About, SlashCommand::Article]
-            .into_iter()
-            .map(|command| (command.name().to_string(), command))
-            .collect();
+        let commands = vec![
+            SlashCommand::About,
+            SlashCommand::Article,
+            SlashCommand::Random,
+        ]
+        .into_iter()
+        .map(|command| (command.name().to_string(), command))
+        .collect();
 
         Self { commands }
     }
