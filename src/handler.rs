@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use crate::{
     commands::{SlashCommand, SlashCommands, about, article, random},
     error::SlashCommandError,
@@ -13,19 +15,53 @@ use serenity::{
 use tracing::info;
 
 #[derive(Debug, Display)]
-struct InteractionError(String);
-impl std::error::Error for InteractionError {}
+struct HandlerError(String);
+impl std::error::Error for HandlerError {}
 
 pub(super) struct Handler {
     slash_commands: SlashCommands,
-    state: State,
+    state: Arc<State>,
 }
 
 impl Handler {
     pub(super) fn new(slash_commands: SlashCommands, state: State) -> Self {
         Self {
             slash_commands,
-            state,
+            state: Arc::new(state),
+        }
+    }
+
+    async fn refetch_task(state: Arc<State>, ctx: Context) {
+        let mut interval = tokio::time::interval(state.config.refetch_interval);
+        interval.tick().await;
+
+        loop {
+            interval.tick().await;
+
+            let prev_count = state.articles_repository.count();
+
+            let result = state
+                .articles_repository
+                .update_from_csv()
+                .await
+                .or_raise(|| HandlerError("failed to refetch articles".into()));
+
+            match result {
+                Ok(_) => {
+                    state
+                        .logger
+                        .info(
+                            &ctx.http,
+                            t!(
+                                "logs.refetched-articles",
+                                count = state.articles_repository.count(),
+                                prev_count = prev_count
+                            ),
+                        )
+                        .await
+                }
+                Err(e) => state.logger.error(&ctx.http, e).await,
+            };
         }
     }
 }
@@ -46,7 +82,7 @@ impl EventHandler for Handler {
                 ))),
             }
             .or_raise(|| {
-                InteractionError(format!(
+                HandlerError(format!(
                     "failed to run slash command '{}'",
                     &interaction.data.name
                 ))
@@ -61,13 +97,13 @@ impl EventHandler for Handler {
                     )),
                 }
                 .or_raise(|| {
-                    InteractionError(format!(
+                    HandlerError(format!(
                         "failed to run autocomplete '{}'",
                         &interaction.data.name
                     ))
                 })
             }
-            _ => Err(Exn::new(InteractionError(
+            _ => Err(Exn::new(HandlerError(
                 "received unexpected interaction".into(),
             ))),
         };
@@ -86,5 +122,7 @@ impl EventHandler for Handler {
             .await;
 
         ctx.set_activity(None);
+
+        tokio::spawn(Self::refetch_task(self.state.clone(), ctx));
     }
 }

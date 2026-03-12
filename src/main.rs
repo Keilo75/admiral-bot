@@ -83,8 +83,6 @@ async fn main() -> Result<(), FatalError> {
                 .start()
                 .await
                 .or_raise(|| FatalError("failed to start client".into()))?;
-
-            // TODO: periodically refetch articles
         }
     }
 

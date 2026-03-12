@@ -32,6 +32,7 @@
   "logs": {
     "info": ":blue_square: %{message}",
     "error": ":red_square: <@%{user_id}>, an error occured: \n```%{error}```",
+    "refetched-articles": "Refetched `%{count}`articles successfully. Previous count was `%{prev_count}`.",
     "logged-in": "Logged in as `%{username}`."
   },
   "format": {

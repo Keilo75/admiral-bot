@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 use derive_more::Display;
 use serenity::all::{ChannelId, Color, UserId};
 
@@ -7,6 +9,7 @@ pub struct Config {
     pub embed_color: Color,
     pub log_channel_id: ChannelId,
     pub log_user_id: UserId,
+    pub refetch_interval: Duration,
 }
 
 #[derive(Debug, Display)]
@@ -25,6 +28,7 @@ impl Config {
             embed_color,
             log_channel_id: args.log_channel_id.into(),
             log_user_id: args.log_user_id.into(),
+            refetch_interval: Duration::from_mins(args.refetch_interval_minutes),
         })
     }
 

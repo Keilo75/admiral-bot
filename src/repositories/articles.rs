@@ -127,6 +127,11 @@ impl ArticlesRepository {
         Ok(())
     }
 
+    pub fn count(&self) -> usize {
+        let articles = self.articles.load();
+        articles.len()
+    }
+
     pub fn get_by_id(&self, id: &str) -> Option<Arc<Article>> {
         let articles = self.articles.load();
         articles.get(id).cloned()

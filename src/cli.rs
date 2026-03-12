@@ -17,6 +17,8 @@ pub(super) struct Args {
     pub(super) database_url: String,
     #[arg(long, env)]
     pub(super) articles_csv_url: String,
+    #[arg(long, env)]
+    pub(super) refetch_interval_minutes: u64,
 }
 
 #[derive(Subcommand, Debug)]
