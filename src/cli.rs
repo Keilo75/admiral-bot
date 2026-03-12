@@ -23,10 +23,24 @@ pub(super) struct Args {
 
 #[derive(Subcommand, Debug)]
 pub(super) enum Commands {
-    /// Register commands for the provided guild
-    RegisterDev { application_id: u64, guild_id: u64 },
+    /// Register slash commands
+    Register {
+        /// Delete slash commands instead of registering them
+        #[arg(long, action)]
+        delete: bool,
+        #[command(subcommand)]
+        command: RegisterCommands,
+    },
     /// Create and migrate the database
     MigrateDatabase,
     /// Start the Discord bot
     Start,
+}
+
+#[derive(Subcommand, Debug, Clone)]
+pub(super) enum RegisterCommands {
+    /// Register slash commands to a single guild
+    Guild { application_id: u64, guild_id: u64 },
+    /// Register slash commands globally
+    Global { application_id: u64 },
 }

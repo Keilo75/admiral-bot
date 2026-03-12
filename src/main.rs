@@ -11,6 +11,8 @@ use serenity::{
 use sqlx::{ConnectOptions, sqlite::SqliteConnectOptions};
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
+use crate::cli::RegisterCommands;
+
 mod cli;
 mod commands;
 mod embeds;
@@ -35,16 +37,34 @@ async fn main() -> Result<(), FatalError> {
 
     let slash_commands = commands::SlashCommands::new();
     match args.command {
-        cli::Commands::RegisterDev {
-            application_id,
-            guild_id,
-        } => {
+        cli::Commands::Register { delete, command } => {
             let http = Http::new(&args.discord_token);
-            http.set_application_id(application_id.into());
 
-            http.create_guild_commands(guild_id.into(), &slash_commands.to_create_commands())
-                .await
-                .or_raise(|| FatalError("failed to create guild commands".into()))?;
+            let slash_commands = if delete {
+                Vec::new()
+            } else {
+                slash_commands.to_create_commands()
+            };
+
+            match command {
+                RegisterCommands::Guild {
+                    application_id,
+                    guild_id,
+                } => {
+                    http.set_application_id(application_id.into());
+
+                    http.create_guild_commands(guild_id.into(), &slash_commands)
+                        .await
+                        .or_raise(|| FatalError("failed to create guild commands".into()))?;
+                }
+                RegisterCommands::Global { application_id } => {
+                    http.set_application_id(application_id.into());
+
+                    http.create_global_commands(&slash_commands)
+                        .await
+                        .or_raise(|| FatalError("failed to create global commands".into()))?;
+                }
+            }
         }
 
         cli::Commands::MigrateDatabase => {
