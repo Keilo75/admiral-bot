@@ -23,4 +23,5 @@ RUN apt-get update \
 WORKDIR /app
 COPY --from=builder /app/target/release/admiral-bot .
 
-ENTRYPOINT ["./admiral-bot", "start"]
+ENTRYPOINT ["./admiral-bot"]
+CMD ["start"]
