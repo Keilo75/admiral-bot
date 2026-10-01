@@ -1,5 +1,3 @@
-use std::str::FromStr;
-
 use clap::Parser;
 use derive_more::Display;
 use exn::{Result, ResultExt};
@@ -8,7 +6,6 @@ use serenity::{
     Client,
     all::{GatewayIntents, Http},
 };
-use sqlx::{ConnectOptions, sqlite::SqliteConnectOptions};
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
 use crate::cli::RegisterCommands;
@@ -65,22 +62,6 @@ async fn main() -> Result<(), FatalError> {
                         .or_raise(|| FatalError("failed to create global commands".into()))?;
                 }
             }
-        }
-
-        cli::Commands::MigrateDatabase => {
-            let sqlite_options = SqliteConnectOptions::from_str(&args.database_url)
-                .or_raise(|| FatalError("failed to parse database url".into()))?
-                .create_if_missing(true);
-
-            let mut connection = sqlite_options
-                .connect()
-                .await
-                .or_raise(|| FatalError("failed to connect to database".into()))?;
-
-            sqlx::migrate!("./migrations")
-                .run(&mut connection)
-                .await
-                .or_raise(|| FatalError("failed to migrate database".into()))?;
         }
 
         cli::Commands::Start => {

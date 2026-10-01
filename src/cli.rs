@@ -14,8 +14,6 @@ pub(super) struct Args {
     #[arg(long, env)]
     pub(super) log_user_id: u64,
     #[arg(long, env)]
-    pub(super) database_url: String,
-    #[arg(long, env)]
     pub(super) articles_csv_url: String,
     #[arg(long, env)]
     pub(super) refetch_interval_minutes: u64,
@@ -31,8 +29,6 @@ pub(super) enum Commands {
         #[command(subcommand)]
         command: RegisterCommands,
     },
-    /// Create and migrate the database
-    MigrateDatabase,
     /// Start the Discord bot
     Start,
 }

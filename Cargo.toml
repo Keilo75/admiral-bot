@@ -13,7 +13,6 @@ exn = "0.3.0"
 dotenvy = "0.15.7"
 derive_more = { version = "2", features = ["display"] }
 rust-i18n = "3"
-sqlx = { version = "0.8", features = ["runtime-tokio", "sqlite", "migrate"] }
 reqwest = "0.13.2"
 arc-swap = "1.8.2"
 csv = "1.4.0"
