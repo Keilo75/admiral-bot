@@ -21,6 +21,6 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY --from=builder /app/target/release/admiral-bot /app/admiral-bot
+COPY --from=builder /app/target/release/admiral-bot .
 
-ENTRYPOINT ["/app/admiral-bot", "start"]
+ENTRYPOINT ["./admiral-bot", "start"]
