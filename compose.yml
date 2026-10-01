@@ -1,6 +1,6 @@
 services:
   bot:
-    image: ghcr.io/keilo75/admiral-bot:master
+    image: ghcr.io/keilo75/admiral-bot:${IMAGE_TAG}
     restart: unless-stopped
     env_file:
     - path: .env.prod
