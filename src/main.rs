@@ -23,7 +23,7 @@ i18n!("assets/locale", fallback = "en-US");
 
 #[tokio::main]
 async fn main() -> Result<(), FatalError> {
-    dotenvy::dotenv().or_raise(|| FatalError("failed to load .env file".into()))?;
+    let _ = dotenvy::dotenv();
 
     tracing_subscriber::registry()
         .with(EnvFilter::from_default_env())
