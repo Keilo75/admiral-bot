@@ -11,7 +11,7 @@ RUN cargo build --release
 # Build the actual application
 COPY src ./src
 COPY assets ./assets
-RUN cargo build --release
+RUN touch src/main.rs && cargo build --release
 
 # Stage 2: Run
 FROM debian:bookworm-slim
